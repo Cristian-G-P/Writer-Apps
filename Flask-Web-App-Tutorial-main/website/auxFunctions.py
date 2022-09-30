@@ -123,7 +123,7 @@ def setHalfTitleFormat(document, dataFromHtml):
     paragraphWrite.style = style
 
     paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(100)
+    paragraph_format.space_before = Pt(150)
     paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     font = paragraphWrite.style.font
     font.name = dataFromHtml.HalfTitleFont

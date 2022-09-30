@@ -1,38 +1,37 @@
 {% extends "base.html" %} {% block title %}DownloadGanymede{% endblock %} {% block
 content %}
-
-<br />
-<div class="col text-center">
- <h3 align="center">Your text has been analyzed by Ganymede</h3>
-	</div>
-
-  <br />
-
-<form>
-
-
-            <div id="downloadDiv" name="downloadDiv">
-                <div class="col text-center">
-  <h5 align="center">Please download your document</h5>
-</div>
-                <div class="col text-center">
-    				<a id=download name=download href="{{url_for('.download_file_ganymede')}}">Click here to download your document</a>
-    			</div>
-            </div>
-
-</form>
-
+<head>
+</head>
+<body >
+   <br />
+   <div class="tool">
+      <div class="col text-center">
+         <h8  class="display-h8" align="center">Your text has been analyzed by Ganymede</h8>
+      </div>
+   </div>
+   <br />
+   <form>
+      <div id="downloadDiv" name="downloadDiv">
+         <div class="col text-center">
+            <a class="display-tools" id=download name=download href="{{url_for('.download_file_ganymede')}}">Click here to download your document</a>
+         </div>
+      </div>
+      <div class="row"><br /></div>
+      <div class="row"><br /></div>
+      <div class="row"><br /> </div>
+      <div class="row"><br /></div>
+      <div class="row"><br /></div>
+      <div class="row"><br /> </div>
+   </form>
+</body>
 <script>
+   download.addEventListener("click", function() {
 
-download.addEventListener("click", function() {
-
-  	var downloadDiv = document.getElementById("downloadDiv");
-     downloadDiv.style.visibility="hidden";
-    //datos2.innerHTML="Loading... It might take up to two minutes";
-    //var loader = document.getElementById("loader");
-    //download.style.visibility="visible";
-});
+     	var downloadDiv = document.getElementById("downloadDiv");
+        downloadDiv.style.visibility="hidden";
+       //datos2.innerHTML="Loading... It might take up to two minutes";
+       //var loader = document.getElementById("loader");
+       //download.style.visibility="visible";
+   });
 </script>
-
 {% endblock %}
-

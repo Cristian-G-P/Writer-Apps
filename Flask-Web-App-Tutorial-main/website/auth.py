@@ -1,14 +1,14 @@
 import io
 import os
 import string
-from typing import Union, Any
+# from typing import Union, Any
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, send_file, flash
+# from flask import Blueprint, render_template, request, flash, redirect, url_for, send_file, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug import Response
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from flask import Flask, Request
+# from flask import Flask, Request
 from werkzeug.wsgi import FileWrapper
 
 # from formatText import formatText
@@ -61,10 +61,9 @@ class dataFromHtml:
 auth = Blueprint('auth', __name__)
 
 
-
-@auth.route('/login', methods=['GET', 'POST'])
-def home():
-    return render_template("home.html")
+# @auth.route('/login', methods=['GET', 'POST'])
+# def home():
+#   return render_template("home.html")
 
 
 @auth.route('/contact', methods=['GET', 'POST'])
@@ -73,47 +72,44 @@ def contact():
     dataFromHtml = loadDataFromHtml(request)
     print("#############################33")
     print(dataFromHtml.bookTitle)
-    #file = request.files['file']
-    #analyzeGrammar(file, dataFromHtml)
+    # file = request.files['file']
+    # analyzeGrammar(file, dataFromHtml)
 
     return render_template("contact.html")
 
 
-@auth.route('/login', methods=['GET', 'POST'])
-def login():
-    print('login')
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+# @auth.route('/login', methods=['GET', 'POST'])
+# def login():
+#   print('login')
+#  if request.method == 'POST':
+#     email = request.form.get('email')
+#    password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first()
-        if user:
-            if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category='success')
-                login_user(user, remember=True)
-                return redirect(url_for('views.home'))
-            else:
-                flash('Incorrect password, try again.', category='error')
-        else:
-            flash('Email does not exist.', category='error')
+#   user = User.query.filter_by(email=email).first()
+#  if user:
+#     if check_password_hash(user.password, password):
+#        flash('Logged in successfully!', category='success')
+#       login_user(user, remember=True)
+#      return redirect(url_for('views.home'))
+# else:
+#    flash('Incorrect password, try again.', category='error')
+# else:
+#   flash('Email does not exist.', category='error')
 
-    return render_template("login.html", user=current_user)
+# return render_template("login.html", user=current_user)
 
 
-@auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('auth.login'))
+# @auth.route('/logout')
+# @login_required
+# def logout():
+#   logout_user()
+#  return redirect(url_for('auth.login'))
 
 
 @auth.route('/callisto', methods=['GET', 'POST'])
 def file2():
-
-
     if request.method == 'POST' and request.files:
         dataFromHtml = loadDataFromHtml(request)
-
 
         file = request.files['file']
         if 'file' not in request.files:
@@ -126,40 +122,36 @@ def file2():
         elif len(dataFromHtml.bookTitle) > 256:
             flash('Book title must be shorter than 256 characters', category='error')
             return redirect(request.url)
-        #elif 'bookSubTitle' in request.files:
-         #   if len(dataFromHtml.bookSubTitle) > 256:
-          #      flash('Book subtitle must be shorter than 256 characters', category='error')
-           #     return redirect(request.url)
+        # elif 'bookSubTitle' in request.files:
+        #   if len(dataFromHtml.bookSubTitle) > 256:
+        #      flash('Book subtitle must be shorter than 256 characters', category='error')
+        #     return redirect(request.url)
         elif len(dataFromHtml.author) < 1:
             flash('Author must be longer than 1 character', category='error')
             return redirect(request.url)
         elif file.filename == '':
             flash('No selected file.', category='error')
         elif len(dataFromHtml.ISBN) > 32:
-                flash('ISBN must be shorter than 32 characters', category='error')
-                return redirect(request.url)
+            flash('ISBN must be shorter than 32 characters', category='error')
+            return redirect(request.url)
 
+        # bookTitleSecure = secure_filename(dataFromHtml.bookTitle)
+        # dataFromHtml.bookTitle = bookTitleSecure
 
+        # bookSubtitleSecure = secure_filename(dataFromHtml.bookSubTitle)
+        # dataFromHtml.bookSubTitle = bookSubtitleSecure
 
-        bookTitleSecure = secure_filename(dataFromHtml.bookTitle)
-        dataFromHtml.bookTitle = bookTitleSecure
+        # authorSecure = secure_filename(dataFromHtml.author)
+        # dataFromHtml.author = authorSecure
 
-        bookSubtitleSecure = secure_filename(dataFromHtml.bookSubTitle)
-        dataFromHtml.bookSubTitle = bookSubtitleSecure
-
-        authorSecure = secure_filename(dataFromHtml.author)
-        dataFromHtml.author = authorSecure
-
-        ISBNSecure = secure_filename(dataFromHtml.ISBN)
-        dataFromHtml.ISBN = ISBNSecure
+        # ISBNSecure = secure_filename(dataFromHtml.ISBN)
+        # dataFromHtml.ISBN = ISBNSecure
 
         if file and allowed_file(file.filename):
-
-
             filename = secure_filename(file.filename)
             file.filename = filename
 
-            #file.save(os.path.join("", filename))
+            # file.save(os.path.join("", filename))
 
             formatText(file, dataFromHtml)
 
@@ -170,26 +162,66 @@ def file2():
 
 @auth.route('/download', methods=['GET', 'POST'])
 def index():
-    return send_file('temporal/' + dataFromHtml.bookTitle + ' - Formatted by Callisto' + '.docx', as_attachment=True)
+
+    file_path = 'website/temporal/' + dataFromHtml.bookTitle + ' - Formatted by Callisto' + '.docx'
+
+    return_data = io.BytesIO()
+
+    with open(file_path, 'rb') as fo:
+        return_data.write(fo.read())
+    # (after writing, cursor will be at last byte, so move it to start)
+    return_data.seek(0)
+
+    os.remove(file_path)
+
+
+    file_wrapper = FileWrapper(return_data)
+    headers = {
+        'Content-Disposition': 'attachment; filename="{}"'.format(
+            dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
+    }
+    response = Response(file_wrapper,
+                        mimetype='application//msword',
+                        direct_passthrough=True,
+                        headers=headers)
+    return response
+
+
 
 
 @auth.route('/download', methods=['GET', 'POST'])
+# TODO ESTO SE BORRA
 def download_file():
+
     send_file('temporal/' + dataFromHtml.bookTitle + ' - Formatted by Callisto1' + '.docx', as_attachment=True)
     os.remove('temporal/' + dataFromHtml.bookTitle + ' - Formatted by Callisto' + '.docx')
+
+
+
+
+@auth.route('/io', methods=['GET', 'POST'])
+def download_character_ganymede():
+    return render_template("io.html")
+
+
+
+@auth.route('/ioCharacter', methods=['GET', 'POST'])
+def ioCharacter():
+    return (send_file('IoTemplates/Character_Template.docx', 'Character_Template.docx', as_attachment=True))
+
+
+@auth.route('/ioCauseEffect', methods=['GET', 'POST'])
+def ioCauseEffect():
+    return (send_file('IoTemplates/Ishikawa_Diagram.pptx', as_attachment=True))
 
 
 ################################################################################
 @auth.route('/ganymede', methods=['GET', 'POST'])
 def fileGrammar():
-
     dataFromHtml = loadDataFromHtml(request)
-
-
 
     if request.method == 'POST' and request.files:
         dataFromHtml = loadDataFromHtml(request)
-
 
         file = request.files['file']
         if 'file' not in request.files:
@@ -214,6 +246,7 @@ def fileGrammar():
 
             analyzeGrammar(file, dataFromHtml)
 
+
             return (render_template("downloadGanymede.html"))
 
     return (render_template("ganymede.html"))
@@ -221,24 +254,23 @@ def fileGrammar():
 
 @auth.route('/downloadGanymede', methods=['GET', 'POST'])
 def download_file_ganymede():
-
-
     file_path = 'website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx'
 
     return_data = io.BytesIO()
 
     with open(file_path, 'rb') as fo:
         return_data.write(fo.read())
-# (after writing, cursor will be at last byte, so move it to start)
+    # (after writing, cursor will be at last byte, so move it to start)
     return_data.seek(0)
 
     os.remove('website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
 
-    #return send_file(return_data, 'cristian.docx', mimetype='application/msword')
-##################################
+    # return send_file(return_data, 'cristian.docx', mimetype='application/msword')
+    ##################################
     file_wrapper = FileWrapper(return_data)
     headers = {
-        'Content-Disposition': 'attachment; filename="{}"'.format(dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
+        'Content-Disposition': 'attachment; filename="{}"'.format(
+            dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
     }
     response = Response(file_wrapper,
                         mimetype='application//msword',
@@ -246,13 +278,13 @@ def download_file_ganymede():
                         headers=headers)
     return response
 
+
 ##################################
 
 
-    #os.remove('website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
-    #return(send_file('temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx', as_attachment=True))
-    #return (render_template("deleteGanymede.html"))
-
+# os.remove('website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
+# return(send_file('temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx', as_attachment=True))
+# return (render_template("deleteGanymede.html"))
 
 
 #################################################################################
@@ -301,8 +333,7 @@ def loadDataFromHtml(request):
     dataFromHtml.OutsideMargin = request.form.get('Outside')
     dataFromHtml.PublishOrEdit = request.form.get('drone')
 
-
-############################################################################
+    ############################################################################
     if dataFromHtml.PublishOrEdit == 'toEdit':
         dataFromHtml.HalfTitlePage = 'No'
         dataFromHtml.CopyrightPage = 'No'
@@ -312,9 +343,8 @@ def loadDataFromHtml(request):
         dataFromHtml.OutsideMargin = '0.75 in (19.1 mm)'
         dataFromHtml.ParagraphFontSize = '12'
         dataFromHtml.ChapterDescription = 'Yes'
-        dataFromHtml.Justification ='JUSTIFY'
+        dataFromHtml.Justification = 'JUSTIFY'
     ############################################################################
-
 
     return dataFromHtml
 

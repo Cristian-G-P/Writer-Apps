@@ -1,23 +1,37 @@
 {% extends "base.html" %} {% block title %}Download{% endblock %} {% block
 content %}
-<br />
+<head>
+</head>
+<body >
+   <br />
+   <div class="tool">
+      <div class="col text-center">
+         <h8  class="display-h8" align="center">Your text has been formatted by Callisto</h8>
+      </div>
+   </div>
+   <br />
+   <form>
+      <div id="downloadDiv" name="downloadDiv">
+         <div class="col text-center">
+            <a class="display-tools" id=download name=download href="{{url_for('.download_file')}}">Click here to download your document</a>
+         </div>
+      </div>
+      <div class="row"><br /></div>
+      <div class="row"><br /></div>
+      <div class="row"><br /> </div>
+      <div class="row"><br /></div>
+      <div class="row"><br /></div>
+      <div class="row"><br /> </div>
+   </form>
+</body>
+<script>
+   download.addEventListener("click", function() {
 
- <h3 align="center">Your text has been formatted by Callisto</h3>
-  <h5 align="center">Please download the document, open it, and follow these instructions:</h5>
-
-  <br />
-
-
-<div class="container-fluid h-100">
-    		<div class="row w-100 align-items-center">
-    			<div class="col text-center">
-    				<a href="{{url_for('.download_file')}}">Click here to download your document</a>
-    			</div>
-    		</div>
-
-
-    	</div>
-
-
-
+     	var downloadDiv = document.getElementById("downloadDiv");
+        downloadDiv.style.visibility="hidden";
+       //datos2.innerHTML="Loading... It might take up to two minutes";
+       //var loader = document.getElementById("loader");
+       //download.style.visibility="visible";
+   });
+</script>
 {% endblock %}
