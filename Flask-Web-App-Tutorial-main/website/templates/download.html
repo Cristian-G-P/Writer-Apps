@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Download{% endblock %} {% block
+content %}
+<br />
+
+ <h3 align="center">Your text has been formatted by Callisto</h3>
+  <h5 align="center">Please download the document, open it, and follow these instructions:</h5>
+
+  <br />
+
+
+<div class="container-fluid h-100">
+    		<div class="row w-100 align-items-center">
+    			<div class="col text-center">
+    				<a href="{{url_for('.download_file')}}">Click here to download your document</a>
+    			</div>
+    		</div>
+
+
+    	</div>
+
+
+
+{% endblock %}

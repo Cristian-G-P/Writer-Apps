@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}BookFormatted{% endblock %} {% block content
+%}
+<form method="POST">
+  <h3 align="center">Your text has been formatted</h3>
+  <h5 align="center">Please open the document and follow these instructions:</h5>
+
+  <br />
+
+   <a href="{{url_for('.download_file')}}">Download</a>
+
+</form>
+{% endblock %}

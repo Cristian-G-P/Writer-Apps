@@ -1,0 +1,600 @@
+{% extends "base.html" %} {% block title %}Callisto{% endblock %} {% block
+content %}
+
+ <br />
+
+   <div  id="datos1" class="row justify-content-center" ></div>
+   <div id="loader" class="row justify-content-center">
+      <div class="spinner-border" role="status">
+         <span class="sr-only">Loading...</span>
+      </div>
+   </div>
+
+<form method="post" enctype = "multipart/form-data"  class="needs-validation" novalidate name="Callisto" id="Callisto">
+
+   <div class="form-group"  >
+       <div class="p-3 mb-2 bg-info text-white">
+      <h3 align="center">Callisto Text Formatter</h3>
+          </div>
+      <label for="bookTitle">Book Title</label>
+      <input
+         type="text"
+         class="form-control"
+         id="bookTitle"
+         name="bookTitle"
+         placeholder="Enter book title"
+         required>
+      <div class="invalid-feedback">
+         Please complete this field
+      </div>
+   </div>
+   <br />
+   <div class="form-group">
+      <label for="bookSubTitle">Book Subtitle</label>
+      <input
+         type="text"
+         class="form-control"
+         id="bookSubTitle"
+         name="bookSubTitle"
+         placeholder="Enter book subtitle"
+         />
+   </div>
+   <br />
+   <div class="form-group">
+      <label for="authorName">Author</label>
+      <input
+         type="text"
+         class="form-control"
+         id="authorName"
+         name="author"
+         placeholder="Enter author"
+         required>
+      <div class="invalid-feedback">
+         Please complete this field
+      </div>
+   </div>
+   <br />
+   <label for="file" class="form-label">Upload your Document</label>
+   <input class="form-control" type="file" id="file" name="file"required>
+   <div class="invalid-feedback">
+      Please upload your document
+   </div>
+   <br />
+   <div id="datos"></div>
+   <fieldset>
+      <p>Select Book Format</p>
+      <div class="form-check form-check-inline">
+         <input class="form-check-input" type="radio" id="toPublish" name="drone" value="toPublish"
+            checked>
+         <label class="form-check-label" for="toPublish">To Publish</label>
+      </div>
+      <div class="form-check form-check-inline">
+         <input class="form-check-input" type="radio" id="toEdit" name="drone" value="toEdit">
+         <label class="form-check-label" for="toEdit">To Edit</label>
+      </div>
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModalPublish" id="PersonalizePublish" name="PersonalizePublish">Personalize Publish Format</button>
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal2">View Book Structure</button>
+   </fieldset>
+   <br />
+   <input class="btn btn-primary" type="submit" value="Format">
+   <!-- Trigger the modal with a button -->
+   <br />
+   <!-- Modal1##################################################################### -->
+   <div id="myModalPublish" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h5 class="modal-title">Format Details</h5>
+            </div>
+            <div class="modal-body">
+               <div class="text-center">
+                  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal2">View Book Structure</button>
+               </div>
+               <div class="row">
+                  <div class="col-sm-5">
+                     <p class="h5">Half Title Page</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Half Title Page">Add Half Title Page?</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Half Title Page' name="Half Title Page" onChange="combo(this, 'box)">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Half Title Font">Half Title Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Half Title Font' name="Half Title Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Half Title Font Size">Half Title Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Half Title Font Size' name="Half Title Font Size" onChange="combo(this, 'box)">
+                        <option>20</option>
+                        <option>22</option>
+                        <option>24</option>
+                        <option>28</option>
+                        <option selected>32</option>
+                        <option>36</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-4">
+                     <p class="h5">Title Page</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Title Page">Add Title Page?</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Title Page' name="Title Page" onChange="combo(this, 'box)">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Title Page Font">Title Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Title Page Font' name="Title Page Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Title Page Font Size">Title Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Title Page Font Size' name="Title Page Font Size" onChange="combo(this, 'box)">
+                        <option>20</option>
+                        <option>22</option>
+                        <option>24</option>
+                        <option>28</option>
+                        <option selected>32</option>
+                        <option>36</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Subtitle Font">Subtitle Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Subtitle Font' name="Subtitle Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Subtitle Font Size">Subtitle Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Subtitle Font Size' name="Subtitle Font Size" onChange="combo(this, 'box)">
+                        <option>16</option>
+                        <option>18</option>
+                        <option>20</option>
+                        <option>22</option>
+                        <option selected>24</option>
+                        <option>26</option>
+                        <option>28</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Author Font">Author Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Author Font' name="Author Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Author Font Size">Author Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Author Font Size' name="Author Font Size" onChange="combo(this, 'box)">
+                        <option>12</option>
+                        <option selected>14</option>
+                        <option>16</option>
+                        <option>18</option>
+                        <option>20</option>
+                        <option>22</option>
+                        <option>24</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <p class="h5">Copyright Page</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Copyright page">Add Copyright Page?</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Copyright Page' name="Copyright Page" onChange="combo(this, 'box)">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Copyright Font">Copyright Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Copyright Font' name="Copyright Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Half Title Font Size">Copyright Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Copyright Font Size' name="Copyright Font Size" onChange="combo(this, 'box)">
+                        <option>6</option>
+                        <option selected>8</option>
+                        <option>10</option>
+                        <option>12</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="ISBN">ISBN</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <input
+                        type="text"
+                        class="form-control"
+                        id="ISBN"
+                        name="ISBN"
+                        placeholder="Enter ISBN"
+                        >
+                  </div>
+               </div>
+               <br />
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <p class="h5">Chapters</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Chapter Title Font">Chapter Title Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id= 'Chapter Title Font' name="Chapter No Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Chapter Title Font Size">Chapter Title Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id= 'Chapter Title Font Size' name="Chapter Title Font Size" onChange="combo(this, 'box)">
+                        <option >10</option>
+                        <option>12</option>
+                        <option>14</option>
+                        <option >16</option>
+                        <option>18</option>
+                        <option selected="selected">20</option>
+                        <option>22</option>
+                        <option>24</option>
+                     </select>
+                  </div>
+                  <br />
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <p class="h5">Chapter Description</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Chapter Description">Has Chapter Description?</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id= 'Chapter Description' name="Chapter Description" onChange="combo(this, 'box)">
+                        <option>Yes</option>
+                        <option selected>No</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Chapter Description Font">Chapter Description Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Chapter Description Font' name="Chapter Description Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br/>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Chapter Description Font Size">Chapter Description Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Chapter Description Font Size' name="Chapter Description Font Size" onChange="combo(this, 'box)">
+                        <option>6</option>
+                        <option>8</option>
+                        <option >9</option>
+                        <option >10</option>
+                        <option selected="selected">11</option>
+                        <option>12</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <p class="h5">Paragraphs</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Paragraph Font">Paragraph Font</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Paragraph Font' name="Paragraph Font" onChange="combo(this, 'box)">
+                        <option>Arial</option>
+                        <option>Calibri</option>
+                        <option>Cambria</option>
+                        <option>Garamond</option>
+                        <option  selected="selected">Times New Roman</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Paragraph Font Size">Paragraph Font Size</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Paragraph Font Size' name="Paragraph Font Size" onChange="combo(this, 'box)">
+                        <option>6</option>
+                        <option>8</option>
+                        <option >9</option>
+                        <option >10</option>
+                        <option selected="selected">11</option>
+                        <option>12</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Interlining">Line Spacing</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Interlining' name="Interlining" onChange="combo(this, 'box)">
+                        <option>1</option>
+                        <option>1.15</option>
+                        <option selected="selected">1.3</option>
+                        <option>1.5</option>
+                        <option>2</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-6">
+                     <label for="Justification">Paragraph Alignment</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <select class="btn btn-secondary dropdown-toggle" id='Justification' name="Justification" onChange="combo(this, 'box)">
+                        <option>LEFT</option>
+                        <option>CENTER</option>
+                     </select>
+                  </div>
+               </div>
+               <br />
+               <div class="row">
+                  <div class="col-sm-4">
+                     <p class="h5">Page</p>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-6">
+                        <label for="Page Size">Page Size</label>
+                     </div>
+                     <div class="col-sm-6">
+                        <select class="btn btn-secondary dropdown-toggle" id='Page Size' name="Page Size" onChange="combo(this, 'box)">
+                           <option selected>5" x 8" (12.7 x 20.32 cm)</option>
+                           <option>5.25" x 8" (13.34 x 20.32 cm)</option>
+                           <option>5.5" x 8.5" (13.97 x 21.59 cm)</option>
+                           <option>6" x 9" (15.24 x 22.86 cm)</option>
+                           <option>7" x 10" x (17.78 x 25.4 cm)</option>
+                           <option>8" x 10" (20.32 x 25.4 cm)</option>
+                        </select>
+                     </div>
+                  </div>
+                  <br/>
+                  <br/>
+                  <div class="row">
+                     <div class="col-sm-6">
+                        <label for="Inside">Inside Margin (No less than)</label>
+                     </div>
+                     <div class="col-sm-6">
+                        <select class="btn btn-secondary dropdown-toggle" id='Inside' name="Inside" onChange="combo(this, 'box)">
+                           <option>0.375 in (9.6 mm)</option>
+                           <option>0.5 in (12.7 mm)</option>
+                           <option>0.625 in (15.9 mm)</option>
+                           <option>0.75 in (19.1 mm)</option>
+                           <option>0.875 in (22.3 mm)</option>
+                        </select>
+                     </div>
+                  </div>
+                  <br />
+                  <br />
+                  <div class="row">
+                     <div class="col-sm-6">
+                        <label for="Outside">Outside Margin</label>
+                     </div>
+                     <div class="col-sm-4">
+                        <select class="btn btn-secondary dropdown-toggle" id='Outside' name="Outside" onChange="combo(this, 'box)">
+                           <option>0.25 in (6.4 mm)</option>
+                           <option selected>0.3 in (7.6 mm)</option>
+                        </select>
+                     </div>
+                  </div>
+                  <br />
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Modal BOOK STRUCTURE################################################################## -->
+   <div id="myModal2" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-xl">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h5 class="modal-title">Format Details</h5>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+                  <div class="col-sm-4">
+                     <p class="h5">Half Title Page</p>
+                     <img src="static/pagina.PNG" class="img-fluid">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+<script>
+   var loader = document.getElementById("loader");
+   loader.style.visibility="hidden";
+
+
+   var datos = document.getElementById('datos');
+       var rad = document.Callisto.drone;
+       var prev = null;
+
+       for (var i = 0; i < rad.length; i++) {
+       rad[i].addEventListener('change', function() {
+           (prev) ? console.log(prev.value): null;
+           if (this !== prev) {
+               prev = this;
+               datos.innerHTML="";
+           }
+
+       if(document.getElementById('toPublish').checked) {
+           document.querySelector('#PersonalizePublish').disabled = false;
+
+       }else if(document.getElementById('toEdit').checked) {
+
+        document.querySelector('#PersonalizePublish').disabled = true;
+       }
+    });
+   }
+
+
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }else{
+               var loader = document.getElementById("loader");
+               loader.style.visibility="visible";
+              var datos2 = document.getElementById("datos1");
+               datos2.innerHTML="Loading... It might take up to two minutes ";
+               var myForm = document.getElementById("Callisto");
+               myForm.style.visibility="hidden";
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+</script>
+{% endblock %}

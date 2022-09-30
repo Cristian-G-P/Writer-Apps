@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block title %}Ganymede{% endblock %} {% block
+content %}
+
+<html lang="en" xmlns:float="http://www.w3.org/1999/xhtml">
+
+<form method="post" enctype = "multipart/form-data"  class="needs-validation" novalidate>
+   <br />
+
+ <div  id="datos" class="row justify-content-center"></div>
+         <div id="loader" class="row justify-content-center">
+
+               <div class="spinner-border" role="status">
+                     <span class="sr-only">Loading...</span>
+                </div>
+         </div>
+
+
+
+    <div class="form-group" id="myForm">
+
+        <div class="p-3 mb-2 bg-dark text-white">
+    <h3 align="center">Ganymede Text Analyzer</h3>
+</div>
+        <label for="bookTitle">Book Title</label>
+        <input
+                type="text"
+                class="form-control"
+                id="bookTitle"
+                name="bookTitle"
+                placeholder="Enter book title"
+                required>
+        <div class="invalid-feedback">
+            Please complete this field
+        </div>
+        <br />
+        <label for="file" class="form-label">Upload your Document</label>
+        <input class="form-control" type="file" id="file" name="file" required>
+        <div class="invalid-feedback">
+            Please upload your document
+        </div>
+        <br />
+        <div class="col col-lg-1">
+            <input   class="btn btn-primary" type="submit" value="Analyze" id="Analyze" name="Analyze">
+         </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+</html>
+<script>
+var loader = document.getElementById("loader");
+loader.style.visibility="hidden";
+
+//Analyze.addEventListener('click', function() {
+
+  //  var datos2 = document.getElementById("datos");
+    //datos2.innerHTML="Loading... It might take up to two minutes";
+    //var loader = document.getElementById("loader");
+    //loader.style.visibility="visible";
+//});
+
+
+   // Example starter JavaScript for disabling form submissions if there are invalid fields
+   (function() {
+     'use strict';
+     window.addEventListener('load', function() {
+       // Fetch all the forms we want to apply custom Bootstrap validation styles to
+       var forms = document.getElementsByClassName('needs-validation');
+       // Loop over them and prevent submission
+       var validation = Array.prototype.filter.call(forms, function(form) {
+         form.addEventListener('submit', function(event) {
+           if (form.checkValidity() === false) {
+             event.preventDefault();
+             event.stopPropagation();
+           } else {
+
+           var loader = document.getElementById("loader");
+            loader.style.visibility="visible";
+           var datos2 = document.getElementById("datos");
+            datos2.innerHTML="Loading... It might take up to two minutes";
+            document.getElementById("bookTitle").readOnly = true;
+           document.getElementById("file").readOnly = true;
+
+           document.getElementById("Analyze").disabled = true;
+           var myForm = document.getElementById("myForm");
+            myForm.style.visibility="hidden";
+
+            }
+           form.classList.add('was-validated');
+         }, false);
+       });
+     }, false);
+   })();
+</script>
+{% endblock %}
