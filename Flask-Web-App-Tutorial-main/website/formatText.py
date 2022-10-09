@@ -3,13 +3,15 @@ from docx import Document
 
 from .auxFunctions import *
 from .values import *
+from datetime import datetime
 
 
 
 def formatText(file, dataFromHtml):
 
     document = Document()
-    doc = docx.Document(file.filename)
+    doc = docx.Document('website/temporal/' + file.filename)
+
     document.styles
     setSectionFormat(document, dataFromHtml, doc)
 
@@ -97,3 +99,15 @@ def formatText(file, dataFromHtml):
     #setSectionFormat(document, dataFromHtml, countWords)
     #print(countWords)
     document.save('website/temporal/' + dataFromHtml.bookTitle+ ' - Formatted by Callisto' + '.docx')
+
+    saveCallistoLog(dataFromHtml.bookTitle, dataFromHtml.author)
+def saveCallistoLog(book, author):
+    now = datetime.now()
+    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+
+
+    doc = docx.Document('website/temporal/CallistoLogs.docx')
+
+    paragraph = date_time + ' --- ' + book + ' --- ' + author
+    doc.add_paragraph(paragraph)
+    doc.save('website/temporal/CallistoLogs.docx')

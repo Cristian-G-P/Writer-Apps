@@ -9,7 +9,7 @@ content %}
    </head>
    <body class="tool" data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
    <br />
-      <section id="ganymedeSection">
+      <section id="ganymedeSection" class="vh-100">
          <form method="post" enctype = "multipart/form-data"  class="needs-validation" novalidate>
             <div  id="datos" class="text-white row justify-content-center"></div>
             <div id="loader" class="row justify-content-center">
@@ -97,7 +97,7 @@ content %}
               var loader = document.getElementById("loader");
                loader.style.visibility="visible";
               var datos2 = document.getElementById("datos");
-               datos2.innerHTML="Loading... It might take up to two minutes";
+               datos2.innerHTML="Analyzing... It might take up to two minutes";
                document.getElementById("bookTitle").readOnly = true;
               document.getElementById("file").readOnly = true;
 

@@ -56,6 +56,7 @@ class dataFromHtml:
     InsideMargin: string
     OutsideMargin: string
     PublishOrEdit: string
+    FileName: string
 
 
 auth = Blueprint('auth', __name__)
@@ -68,10 +69,10 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/contact', methods=['GET', 'POST'])
 def contact():
-    print('contact')
+
     dataFromHtml = loadDataFromHtml(request)
-    print("#############################33")
-    print(dataFromHtml.bookTitle)
+
+
     # file = request.files['file']
     # analyzeGrammar(file, dataFromHtml)
 
@@ -153,6 +154,9 @@ def file2():
 
             # file.save(os.path.join("", filename))
 
+            dataFromHtml.FileName = filename
+            file.save(os.path.join("website/temporal/", filename))
+
             formatText(file, dataFromHtml)
 
             return (render_template("download.html"))
@@ -172,6 +176,7 @@ def index():
     # (after writing, cursor will be at last byte, so move it to start)
     return_data.seek(0)
 
+    os.remove('website/temporal/' + dataFromHtml.FileName)
     os.remove(file_path)
 
 
@@ -237,12 +242,16 @@ def fileGrammar():
         elif file.filename == '':
             flash('No selected file.', category='error')
 
-        bookTitleSecure = secure_filename(dataFromHtml.bookTitle)
-        dataFromHtml.bookTitle = bookTitleSecure
+       # bookTitleSecure = secure_filename(dataFromHtml.bookTitle)
+        #dataFromHtml.bookTitle = bookTitleSecure
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.filename = filename
+
+            dataFromHtml.FileName = filename
+            file.save(os.path.join("website/temporal/", filename))
+
 
             analyzeGrammar(file, dataFromHtml)
 
@@ -258,11 +267,15 @@ def download_file_ganymede():
 
     return_data = io.BytesIO()
 
+
+
+
     with open(file_path, 'rb') as fo:
         return_data.write(fo.read())
     # (after writing, cursor will be at last byte, so move it to start)
     return_data.seek(0)
 
+    os.remove('website/temporal/' + dataFromHtml.FileName)
     os.remove('website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede' + '.docx')
 
     # return send_file(return_data, 'cristian.docx', mimetype='application/msword')
@@ -337,10 +350,10 @@ def loadDataFromHtml(request):
     if dataFromHtml.PublishOrEdit == 'toEdit':
         dataFromHtml.HalfTitlePage = 'No'
         dataFromHtml.CopyrightPage = 'No'
-        dataFromHtml.Interlining = '1.5'
+        dataFromHtml.Interlining = '1.7'
         dataFromHtml.PageSize = 'Letter 8.5" x 11" (21,59 x 27,94 cm)'
-        dataFromHtml.InsideMargin = '0.75 in (19.1 mm)'
-        dataFromHtml.OutsideMargin = '0.75 in (19.1 mm)'
+        dataFromHtml.InsideMargin = '1 in (25.4 mm)'
+        dataFromHtml.OutsideMargin = '1 in (25.4 mm)'
         dataFromHtml.ParagraphFontSize = '12'
         dataFromHtml.ChapterDescription = 'Yes'
         dataFromHtml.Justification = 'JUSTIFY'

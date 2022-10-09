@@ -9,6 +9,7 @@ from docx.shared import Pt, RGBColor, Inches, Cm
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from collections import OrderedDict
 
+
 from datetime import datetime
 
 
@@ -28,6 +29,7 @@ class Results:
     numberOfWordsOrdered = []
     adverbsCount = dict()
     wordsInChapter = []
+    wordsInBook = int
     filterWords = dict()
     glueWords = dict()
     redundantPhrases = dict()
@@ -39,8 +41,9 @@ class Results:
 def analyzeGrammar(file, dataFromHtml):
     results = Results()
 
-    doc = docx.Document(file.filename)
+    doc = docx.Document('website/temporal/'+ file.filename)
     wordsCountInChapter = 0
+    wordsCountInBook = 0
     chapterCount = 0
     previousWord = ''
     adverbsCount = dict()
@@ -63,6 +66,7 @@ def analyzeGrammar(file, dataFromHtml):
         aux = paragraphRead.strip()
 
         keys = aux.split(" ")
+        wordsCountInBook = wordsCountInBook + len(keys)
 
 
         if keys[0] =='CHAPTER':
@@ -188,7 +192,7 @@ def analyzeGrammar(file, dataFromHtml):
     results.numberOfWordsOrdered = str3
     results.adverbsCount = adverbsCount
     results.wordsInChapter = wordsInChapter
-
+    results.wordsInBook = wordsCountInBook
     displayResults(results, dataFromHtml)
 
 
@@ -273,10 +277,23 @@ def displayResults(results, dataFromHtml):
 
 def printDoc(results, dataFromHtml):
     document = Document()
+    section = document.sections[0]
+    header = section.header
+    footer = section.footer
+    textHeader = header.paragraphs[0]
+    textHeader.text = WEBSITE_ADDRESS + '\tGanymede Text Analyzer'
+    textFooter = footer.paragraphs[0]
+    textFooter.text = WEBSITE_ADDRESS
+
+#########################################################################################
 
     setTitleFormatGrammar(document, dataFromHtml.bookTitle.upper())
     paragraphWrite = document.add_paragraph(GANYMEDE_DESCRIPTION_TEXT)
+    paragraphWrite = document.add_paragraph('\t\t\t\t\t\t\t\t Ganymede Text Analyzer')
 
+
+
+#########################################################################################
 
     paragraph = 'FILLER WORDS'
     paragraphWrite = document.add_paragraph('')
@@ -284,7 +301,6 @@ def printDoc(results, dataFromHtml):
 
     paragraph = FILLER_WORDS_TEXT
     paragraphWrite = document.add_paragraph(paragraph)
-    paragraphWrite.dropCap = True
 
     table = document.add_table(rows=1, cols=2)
     table.style = 'Medium Grid 3 Accent 5'
@@ -295,10 +311,18 @@ def printDoc(results, dataFromHtml):
     for x in FILLER_WORDS:
         if x in results.paragraphWords.keys():
             row = table.add_row().cells
-
             row[0].text = str(x)
-
             row[1].text = str(results.paragraphWords[x])
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check these links for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://www.98thpercentile.com/blog/what-are-verbal-fillers-how-do-they-affect-your-speech/',
+              '98thPercentile.com')
+    printLink(document, 'https://crowwriter.com/cutting-filler-words-in-writing/', 'crowwriter.com')
+    printLink(document, 'https://becomeawritertoday.com/filler-words-list/', 'becomeawritertoday.com')
+    printLink(document, 'https://blog.wordvice.com/avoid-fillers-powerful-writing/', 'blog.wordadvice.com')
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 
 ##################################################################
     paragraph = 'FILTER WORDS'
@@ -323,11 +347,22 @@ def printDoc(results, dataFromHtml):
 
         table.style = 'Medium Grid 3 Accent 5'
 
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check these links for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://michaeljmcdonagh.wordpress.com/2014/01/28/writer-unfiltered/', 'michaeljmcdonagh.wordpress.com')
+    printLink(document, 'https://www.masterclass.com/articles/how-to-avoid-unnecessary-filter-words-in-your-writing', 'masterclass.com')
+    printLink(document, 'https://www.rabbitwitharedpen.com/blog/filter-words-in-fiction','rabbitwitharedpen.com')
+    printLink(document, 'https://heebel.com/2017/05/28/a-few-easy-strategies-to-remove-those-pesky-filter-words-that-fog-up-your-writing/', 'heebel.com')
+
+
 ##################################################################
     paragraph = 'TAG WORDS'
     paragraphWrite = document.add_paragraph('')
     setTitleFormatGrammar(document, paragraph)
     paragraph = TAG_WORDS_TEXT
+    paragraphWrite = document.add_paragraph(paragraph)
+    paragraph = TAG_WORDS_TEXT_2
     paragraphWrite = document.add_paragraph(paragraph)
 
     table = document.add_table(rows=1, cols=2)
@@ -343,6 +378,16 @@ def printDoc(results, dataFromHtml):
             row = table.add_row().cells
             row[0].text = str(x)
             row[1].text = str(results.paragraphWords[x])
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check these links for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://www.scribophile.com/academy/he-said-she-said-dialog-tags-and-using-them-effectively', 'scribophile.com')
+    printLink(document, 'https://www.michellereneemiller.com/dialogue-tags/', 'michellereneemiller.com')
+    printLink(document, 'https://www.nownovel.com/blog/dialogue-words-other-words-for-said/', 'nownovel.com')
+    printLink(document, 'https://thewritepractice.com/dialogue-tags/', 'thewritepractice.com')
+    printLink(document, 'https://www.wattpad.com/948375492-data-for-you-dear-tips-0-10', 'wattpad.com')
+
 
 ##################################################################
     paragraph = 'GLUE WORDS'
@@ -363,8 +408,20 @@ def printDoc(results, dataFromHtml):
         row[0].text = str(x)
         row[1].text = str(results.glueWords[x])
 
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://readable.com/blog/what-are-glue-words-and-how-do-they-affect-readability/',
+              'readable.com')
+
 ##################################################################
     printWithDescription(document, 'NOMINALIZATION WORD', NOMINALIZATION_WORDS_TEXT, 'NOMINALIZATION WORDS', 'COUNT','DESCRIPTION', results.nominalizationWords, NOMINALIZATION_WORDS)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check these links for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://www.thoughtco.com/nominalization-in-grammar-1691430', 'thoughtco.com')
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 ##################################################################
     paragraph = 'ADVERBS ENDING IN LY'
     paragraphWrite = document.add_paragraph('')
@@ -388,6 +445,10 @@ def printDoc(results, dataFromHtml):
 
         table.style = 'Medium Grid 3 Accent 5'
 
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check these links for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://glcubel.com/2020/05/12/a-guide-to-removing-adverbs/', 'glcubel.com')
 ##################################################################
     paragraph = 'OVERUSED WORDS (PART I)'
     paragraphWrite = document.add_paragraph('')
@@ -413,7 +474,7 @@ def printDoc(results, dataFromHtml):
     paragraph = 'OVERUSED WORDS (PART II)'
     paragraphWrite = document.add_paragraph('')
     setTitleFormatGrammar(document, paragraph)
-    paragraph = OVERUSED_WORDS_TEXT
+    paragraph = OVERUSED_WORDS_TEXT_2
     paragraphWrite = document.add_paragraph(paragraph)
 
     table = document.add_table(rows=1, cols=2)
@@ -433,7 +494,7 @@ def printDoc(results, dataFromHtml):
     table.style = 'Medium Grid 3 Accent 5'
 
 ##################################################################
-    paragraph = ('NUMBER OF UNIQUE WORDS ')
+    paragraph = ('UNIQUE WORDS ')
     paragraphWrite = document.add_paragraph('')
     setTitleFormatGrammar(document, paragraph)
     paragraph = UNIQUE_WORDS_TEXT
@@ -447,8 +508,18 @@ def printDoc(results, dataFromHtml):
     row[1].text = str(len(results.numberOfWordsOrdered))
 ##################################################################
     printWithDescription(document, 'FILLER PHRASES', FILLER_PHRASES_TEXT, 'FILLER PHRASE', 'COUNT', 'DESCRIPTION', results.fillerPhrases, FILLER_PHRASES)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 ##################################################################
     printWithDescription(document, 'REDUNDANT PHRASE', REDUNDANT_PHRASES_TEXT, 'REDUNDANT PHRASE', 'COUNT', 'DESCRIPTION', results.redundantPhrases, REDUNDANT_PHRASES)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 ##################################################################
     paragraph = ('PARAGRAPH SIZE')
     paragraphWrite = document.add_paragraph('')
@@ -461,7 +532,7 @@ def printDoc(results, dataFromHtml):
 
     row = table.rows[0].cells
     row[0].text = 'PARAGRAPH'
-    row[1].text = 'NUMBER OF WORDS'
+    row[1].text = 'WORD COUNT'
     row[2].text = 'STARTS WITH'
 
     for x in results.paragraphSizeDic:
@@ -478,14 +549,11 @@ def printDoc(results, dataFromHtml):
     setTitleFormatGrammar(document, paragraph)
     paragraphWrite = document.add_paragraph(CHAPTER_SIZE_TEXT)
 
-    paragraph = CHAPTER_SIZE_TEXT
-    paragraphWrite = document.add_paragraph(paragraph)
-
     table = document.add_table(rows=1, cols=3)
 
     row = table.rows[0].cells
     row[0].text = 'CHAPTER'
-    row[1].text = 'NUMBER OF WORDS'
+    row[1].text = 'WORD COUNT'
     row[2].text = 'COMMENTS'
 
     for x in results.wordsInChapter:
@@ -506,7 +574,14 @@ def printDoc(results, dataFromHtml):
     setTitleFormatGrammar(document, paragraph)
     paragraphWrite = document.add_paragraph(BOOK_LENGTH_TEXT)
 
-    table = document.add_table(rows=1, cols=3)
+    table = document.add_table(rows=1, cols=2)
+    table.style = 'Medium Grid 3 Accent 5'
+    row = table.rows[0].cells
+    row[0].text = 'WORD COUNT'
+    row[1].text = str(results.wordsInBook)
+    paragraphWrite = document.add_paragraph('')
+
+    table = document.add_table(rows=1, cols=2)
     table.style = 'Medium Grid 3 Accent 5'
 
     row = table.rows[0].cells
@@ -534,12 +609,28 @@ def printDoc(results, dataFromHtml):
     row[1].text = '50000 - 800000'
 ##################################################################
     printSectionWithoutCases(document,'CLUNKY CONSTRUCTION', CLUNKY_CONSTRUCTION_TEXT, 'CLUNKY CONSTRUCTION', 'DESCRIPTION', CLUNKY_CONSTRUCTIONS)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
+
 ##################################################################
     printSectionWithoutCases(document,'EMPTY PHRASES', EMPTY_PHRASES_TEXT, 'EMPTY PHRASE', 'DESCRIPTION', EMPTY_PHRASES)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 ##################################################################
     printSectionWithoutCases(document, 'NEGATIVE CONSTRUCTIONS', NEGATIVE_CONSTRUCTION_TEXT, 'NEGATIVE CONSTRUCTION', 'DESCRIPTION', NEGATIVE_CONSTRUCTIONS)
+
+    paragraphWrite = document.add_paragraph('')
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://smartblogger.com/filler-words/', 'smartblogger.com')
 ##################################################################
-    printSectionWithoutCases(document, 'FILLER PHRASES - PART II', FILLER_PHRASES2_TEXT, 'FILLER PHRASE', 'DESCRIPTION', FILLER_PHRASES2)
+    printSectionWithoutCases(document, 'FILLER PHRASES - PART II', FILLER_PHRASES_TEXT_2, 'FILLER PHRASE', 'DESCRIPTION', FILLER_PHRASES2)
  ##################################################################
 
     paragraph = ('SENTENCE LENGTH')
@@ -547,6 +638,10 @@ def printDoc(results, dataFromHtml):
     setTitleFormatGrammar(document, paragraph)
     paragraph = SENTENCE_LENGTH_TEXT
     paragraphWrite = document.add_paragraph(paragraph)
+
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://www.thoughtco.com/sentence-length-grammar-and-composition-1691948', 'thoughtco.com')
 ##################################################################
     paragraph = ('PASSIVE VOICE')
     paragraphWrite = document.add_paragraph('')
@@ -558,17 +653,24 @@ def printDoc(results, dataFromHtml):
     font.size = Pt(12)
     font.underline = False
 
-    p = document.add_paragraph()
-    hyperlink = add_hyperlink(p, 'http://www.google.com', 'Google', '4122ff', True)
-    font = p.style.font
-    font.name = 'Times New Roman'
-    font.size = Pt(12)
+    paragraph = ('Check this link for more information:')
+    paragraphWrite = document.add_paragraph(paragraph)
+    printLink(document, 'https://yoast.com/the-passive-voice-what-is-it-and-how-to-avoid-it/', 'yoast.com')
 
+########################################################################################################
     saveGanymedeLog(dataFromHtml.bookTitle)
 
     document.save('website/temporal/' + dataFromHtml.bookTitle + ' - Analyzed by Ganymede.docx')
 
-##########################################################################3
+########################################################################################################
+def printLink(document, link, text):
+
+    p = document.add_paragraph(style='List Bullet')
+    hyperlink = add_hyperlink(p, link, text, '4122ff', True)
+    font = p.style.font
+    font.name = 'Times New Roman'
+    font.size = Pt(12)
+
 def printSection(document, paragraph, text, col1, col2, results):
 
     paragraphWrite = document.add_paragraph('')
@@ -692,7 +794,7 @@ def saveGanymedeLog(book):
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     print("date and time:", date_time)
 
-    doc = docx.Document('GanymedeLogs.docx')
+    doc = docx.Document('website/temporal/GanymedeLogs.docx')
 
     #fullText = []
     #for para in doc.paragraphs:
@@ -701,6 +803,6 @@ def saveGanymedeLog(book):
 
     paragraph = date_time + ' --- ' + book
     doc.add_paragraph(paragraph)
-    doc.save('GanymedeLogs.docx')
+    doc.save('website/temporal/GanymedeLogs.docx')
 
 

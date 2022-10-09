@@ -3,17 +3,18 @@ content %}
 <head>
 </head>
 <body >
+<section class="vh-100">
    <br />
-   <div class="tool">
+
       <div class="col text-center">
-         <h8  class="display-h8" align="center">Your text has been formatted by Callisto</h8>
+         <h7 class="display-h7" align="center">Your text has been formatted by Callisto</h7>
       </div>
-   </div>
+
    <br />
    <form>
       <div id="downloadDiv" name="downloadDiv">
          <div class="col text-center">
-            <a class="display-tools" id=download name=download href="{{url_for('.download_file')}}">Click here to download your document</a>
+            <a class="display-tools btn btn-link" id=download name=download href="{{url_for('.download_file')}}">Click here to download your document</a>
          </div>
       </div>
       <div class="row"><br /></div>
@@ -23,6 +24,7 @@ content %}
       <div class="row"><br /></div>
       <div class="row"><br /> </div>
    </form>
+</section>
 </body>
 <script>
    download.addEventListener("click", function() {

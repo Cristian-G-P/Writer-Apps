@@ -7,8 +7,9 @@ content %}
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>WriterTools</title>
    </head>
- <body class="tool" data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
+ <body  data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
 <br />
+<section class="vh-100 tool">
 <div  id="datos1" class="text-white row justify-content-center"></div>
 <div id="loader" class="row justify-content-center">
    <div class="spinner-border" role="status">
@@ -578,7 +579,7 @@ content %}
 
 
 
-
+</section>
  </body>
 </html>
 
@@ -629,7 +630,7 @@ content %}
                var loader = document.getElementById("loader");
                loader.style.visibility="visible";
               var datos2 = document.getElementById("datos1");
-               datos2.innerHTML="Loading... It might take up to two minutes ";
+               datos2.innerHTML="Formatting... It might take up to two minutes ";
                var myForm = document.getElementById("Callisto");
                myForm.style.visibility="hidden";
               }

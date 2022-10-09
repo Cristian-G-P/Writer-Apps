@@ -95,23 +95,23 @@ def setIdentitation(paragraphReadChapterCount, doc, indent):
 
     return indentFirstLine
 
-def setChapterTitleFormatAnalysis(document, paragraphRead):
-    paragraphWrite = document.add_heading(paragraphRead)
+#def setChapterTitleFormatAnalysis(document, paragraphRead):
+ #   paragraphWrite = document.add_heading(paragraphRead)
 
-    paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(10)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+  #  paragraph_format = paragraphWrite.paragraph_format
+   # paragraph_format.space_before = Pt(10)
+    #paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
-    # paragraphWrite.style = document.styles.add_style(style, WD_STYLE_TYPE.PARAGRAPH)
-    font = paragraphWrite.style.font
-    font.name = font_name
-    font.size = Pt(fontSizeTitle)
-    font.bold = font_bold
-    font.italic = font_italic
-    font.underline = font_underline
-    font.color.rgb = color
+    ## paragraphWrite.style = document.styles.add_style(style, WD_STYLE_TYPE.PARAGRAPH)
+    #font = paragraphWrite.style.font
+    #font.name = font_name
+    #font.size = Pt(fontSizeTitle)
+    #font.bold = font_bold
+    #font.italic = font_italic
+    #font.underline = font_underline
+    #font.color.rgb = color
 
-    return paragraph_format
+    #return paragraph_format
 
 
 
@@ -424,6 +424,8 @@ def setSectionFormat(document, dataFromHtml, doc):
         section.right_margin = Inches(0.3)
     if dataFromHtml.OutsideMargin == '0.25 in (6.4 mm)':
         section.right_margin = Inches(0.25)
+    if dataFromHtml.OutsideMargin == '1 in (25.4 mm)':
+        section.right_margin = Inches(1)
 
     pageCount = countWords/250
 
@@ -452,6 +454,9 @@ def setSectionFormat(document, dataFromHtml, doc):
         margin = 0.75
     if dataFromHtml.InsideMargin =="0.875 in (22.3 mm)":
         margin = 0.875
+    if dataFromHtml.OutsideMargin == '1 in (25.4 mm)':
+        margin = 1
+
 
     if margin > marginCalc:
         section.left_margin = Inches(margin)
@@ -570,3 +575,19 @@ def setTitleFormatGrammar1(document, paragraphRead):
 
     #paragraphWrite.paragraph_format.element.get_or_add_pPr()
     #paragraphWrite.paragraph_format.element.pPr.append(shd)
+
+def saveGanymedeLog(book):
+    now = datetime.now()
+    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    print("date and time:", date_time)
+
+    doc = docx.Document('website/temporal/GanymedeLogs.docx')
+
+    #fullText = []
+    #for para in doc.paragraphs:
+     #   fullText.append('crrrrrr' + para.text)
+      #  print(fullText)
+
+    paragraph = date_time + ' --- ' + book
+    doc.add_paragraph(paragraph)
+    doc.save('website/temporal/GanymedeLogs.docx')
