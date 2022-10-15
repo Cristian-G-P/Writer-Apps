@@ -8,7 +8,7 @@ content %}
       <title>WriterTools</title>
    </head>
    <body class="tool" data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
-   <br />
+      <br />
       <section id="ganymedeSection" class="vh-100">
          <form method="post" enctype = "multipart/form-data"  class="needs-validation" novalidate>
             <div  id="datos" class="text-white row justify-content-center"></div>
@@ -22,38 +22,28 @@ content %}
                   <div class="p-1 mb-2  text-white">
                      <h7  class="display-h7 text-white">Ganymede Text Analyzer</h7>
                   </div>
-
-
-
-
-
-
-
-<div class ="row">
-   <div class ="col">
-
-                  <label class ="labelField" for="bookTitle">Book Title</label>
-                  <input
-                     type="text"
-                     class="form-control"
-                     id="bookTitle"
-                     name="bookTitle"
-                     placeholder="Enter book title"
-                     required>
-                  <div class="invalid-feedback">
-                     Please complete this field
+                  <div class ="row">
+                     <div class ="col">
+                        <label class ="labelField" for="bookTitle">Book Title</label>
+                        <input
+                           type="text"
+                           class="form-control"
+                           id="bookTitle"
+                           name="bookTitle"
+                           placeholder="Enter book title"
+                           required>
+                        <div class="invalid-feedback">
+                           Please complete this field
+                        </div>
+                     </div>
+                     <div class ="col">
+                        <label for="file" class="labelField">Document</label>
+                        <input class="form-control" type="file" id="file" name="file" required>
+                        <div class="invalid-feedback">
+                           Please upload your document
+                        </div>
+                     </div>
                   </div>
-      </div>
-   <div class ="col">
-
-                  <label for="file" class="labelField">Upload your Document</label>
-                  <input class="form-control" type="file" id="file" name="file" required>
-                  <div class="invalid-feedback">
-                     Please upload your document
-                  </div>
-
-      </div>
-   </div>
                   <div class="col col-lg-1">
                      <br/>
                      <input   class="btn btn-primary" type="submit" value="Analyze" id="Analyze" name="Analyze">
@@ -62,7 +52,6 @@ content %}
             </div>
             <br />
          </form>
-
          <script src="js/bootstrap.bundle.min.js"></script>
       </section>
    </body>

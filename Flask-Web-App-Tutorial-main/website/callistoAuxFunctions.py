@@ -1,12 +1,10 @@
-
-
 from .values import *
-from docx.shared import Pt
-from docx.oxml.ns import qn
 from docx.oxml.shared import OxmlElement
 from docx.shared import Pt, Cm
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.enum.style import WD_STYLE_TYPE
+from datetime import datetime
+import docx
 
 
 def isParagraphAChapter(paragraphReadChapterCount, doc):
@@ -22,8 +20,6 @@ def isParagraphAChapter(paragraphReadChapterCount, doc):
             isParagraphChapterTitle = False
 
     return isParagraphChapterTitle
-
-
 
 def isParagraphADedication(paragraphReadChapterCount, doc):
     isParagraphADedication: bool = False
@@ -95,27 +91,6 @@ def setIdentitation(paragraphReadChapterCount, doc, indent):
 
     return indentFirstLine
 
-#def setChapterTitleFormatAnalysis(document, paragraphRead):
- #   paragraphWrite = document.add_heading(paragraphRead)
-
-  #  paragraph_format = paragraphWrite.paragraph_format
-   # paragraph_format.space_before = Pt(10)
-    #paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-    ## paragraphWrite.style = document.styles.add_style(style, WD_STYLE_TYPE.PARAGRAPH)
-    #font = paragraphWrite.style.font
-    #font.name = font_name
-    #font.size = Pt(fontSizeTitle)
-    #font.bold = font_bold
-    #font.italic = font_italic
-    #font.underline = font_underline
-    #font.color.rgb = color
-
-    #return paragraph_format
-
-
-
-
 def setHalfTitleFormat(document, dataFromHtml):
 
     paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle)
@@ -139,7 +114,6 @@ def setHalfTitleFormat(document, dataFromHtml):
 
 def setTitleFormat(document, dataFromHtml):
     paragraphWrite1 = document.add_paragraph(dataFromHtml.bookTitle)
-    #paragraph_format = paragraphWrite.paragraph_format
     style = document.styles.add_style('TitlePageTitle', WD_STYLE_TYPE.PARAGRAPH)
     paragraphWrite1.style = style
 
@@ -157,7 +131,6 @@ def setTitleFormat(document, dataFromHtml):
     font.color.rgb = RGBColor(0, 0, 0)
 
     paragraphWrite2 = document.add_paragraph(dataFromHtml.bookSubTitle)
-    #paragraph_format = paragraphWrite2.paragraph_format
     style = document.styles.add_style('TitlePageSubtitle', WD_STYLE_TYPE.PARAGRAPH)
     paragraphWrite2.style = style
 
@@ -175,7 +148,6 @@ def setTitleFormat(document, dataFromHtml):
 
     document.add_paragraph('')
     paragraphWrite3 = document.add_paragraph(dataFromHtml.author)
-    #paragraph_format = paragraphWrite3.paragraph_format
     style = document.styles.add_style('Author', WD_STYLE_TYPE.PARAGRAPH)
     paragraphWrite3.style = style
 
@@ -192,12 +164,10 @@ def setTitleFormat(document, dataFromHtml):
     font.color.rgb = RGBColor(0, 0, 0)
 
     document.add_section()
-    #document.add_section()
 
 
 def setCopyrightFormat(document, dataFromHtml):
     style = document.styles.add_style('Copyright1', WD_STYLE_TYPE.PARAGRAPH)
-
 
     paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle +' by ' + dataFromHtml.author)
     paragraphWrite.style = style
@@ -215,7 +185,7 @@ def setCopyrightFormat(document, dataFromHtml):
     paragraphWrite = document.add_paragraph('ISBN: ' + ISBN)
     paragraphWrite.style = style
 
-    paragraph_format = paragraphWrite.paragraph_format
+    paragraphWrite.paragraph_format
 
     font = paragraphWrite.style.font
     font.name = dataFromHtml.CopyrightFont
@@ -226,38 +196,24 @@ def setCopyrightFormat(document, dataFromHtml):
     font.underline = False
     font.color.rgb = RGBColor(0, 0, 0)
 
-    new_section = document.add_section()
+    document.add_section()
 
 
 def setPartFormat(document, paragraphRead):
-    #document.add_section()
-    #paragraphWrite = document.add_heading(paragraphRead)
+
     paragraphWrite = document.add_paragraph(paragraphRead)
-    #style = document.styles.add_style('HalfTitle1', WD_STYLE_TYPE.PARAGRAPH)
-    #paragraphWrite.style = style
 
     paragraph_format = paragraphWrite.paragraph_format
-    #paragraph_format.space_before = Pt(100)
+
     paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     font = paragraphWrite.style.font
-    #font.name = dataFromHtml.HalfTitleFont
-    #size = int(dataFromHtml.HalfTitleFontSize)
+
     font.size = Pt(14)
-    #font.bold = False
-    #font.italic = False
-    #font.underline = False
-    #font.color.rgb = RGBColor(0, 0, 0)
-
-    #document.add_section()
-    #document.add_section()
-
 
 
 def setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml):
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Title']
-
-    #paragraphWrite = document.add_heading(paragraphRead)
 
     paragraph_format = paragraphWrite.paragraph_format
     if isPreviousAPart:
@@ -268,7 +224,6 @@ def setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml
     paragraph_format.space_after = Pt(20)
     paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
-    #paragraphWrite.style = document.styles("CHAPTER_DESCRIPTION")
     font = paragraphWrite.style.font
     font.name = dataFromHtml.ChapterTitleFont
     size = int(dataFromHtml.ChapterTitleFontSize)
@@ -278,14 +233,8 @@ def setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml
     font.underline = font_underline
     font.color.rgb = color
 
-    #new_section = document.add_section()
-    #section = document.sections[0]
-
-    #return paragraph_format
 
 def setChapterDescriptionFormat(document, paragraphRead, isPreviousAPart, dataFromHtml):
-
-
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Description']
 
@@ -297,26 +246,14 @@ def setChapterDescriptionFormat(document, paragraphRead, isPreviousAPart, dataFr
     paragraph_format.right_indent = Inches(0.7)
     paragraph_format.left_indent = Inches(0.7)
 
-
-
-
-
-    #paragraphWrite.style = document.styles['Intense Quote']
     font = paragraphWrite.style.font
     font.name = dataFromHtml.ChapterDescriptionFont
     size = int(dataFromHtml.ChapterDescriptionFontSize)
     font.size = Pt(size)
     font.bold = False
     font.italic = True
-    #font.underline = font_underline
+
     font.color.rgb = RGBColor(0, 0, 0)
-
-
-    #new_section = document.add_section()
-    #section = document.sections[0]
-
-    #return paragraph_format
-
 
 def setChapterFormat(document, paragraphRead, doc, paragraphReadChapterCount, indentFirstLine, dataFromHtml, chapterDescription):
 
@@ -356,29 +293,18 @@ def setChapterFormat(document, paragraphRead, doc, paragraphReadChapterCount, in
         else:
             paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
 
-
         indentFirstLine = setIdentitation(paragraphReadChapterCount, doc, indentFirstLine)
-
-
-
 
         if indentFirstLine:
             paragraph_format.first_line_indent = Pt(18)
-        #else:
-         #   paragraph_format.first_line_indent = Pt(1)
 
-        indentFirstLine = True
-
-    isPreviousAPart = False
     isPreviousAPart = isPreviousNotEmptyParagraphAPart(paragraphReadChapterCount, doc)
     isNextParagrapahChapterTitle = isParagraphAChapter(paragraphReadChapterCount + 1, doc)
     isNextParagrapahPart = isParagraphAPart(paragraphReadChapterCount + 1, doc)
 
 
     if (isNextParagrapahChapterTitle or isNextParagrapahPart) and (not isPreviousAPart):
-        new_section = document.add_section()
-        #section = document.sections[0]
-
+        document.add_section()
 
 
 def setSectionFormat(document, dataFromHtml, doc):
@@ -462,10 +388,6 @@ def setSectionFormat(document, dataFromHtml, doc):
         section.left_margin = Inches(margin)
     else:
         section.left_margin = Inches(marginCalc)
-    #section.left_margin = Inches(left_margin)
-    #if dataFromHtml.InsideMargin > 0.375
-
-    #section.right_margin = Inches(right_margin)
 
     section.different_first_page_header_footer = True
     document.settings.odd_and_even_pages_header_footer = True
@@ -476,7 +398,6 @@ def setSectionFormat(document, dataFromHtml, doc):
     evenFooter = section.even_page_footer
 
     header.is_linked_to_previous = False
-
 
     textHeader = header.paragraphs[0]
     textHeader.text = dataFromHtml.bookTitle
@@ -489,105 +410,3 @@ def setSectionFormat(document, dataFromHtml, doc):
 
     textEvenFooter = evenFooter.paragraphs[0]
     textEvenFooter.text = 'Even Page Number'
-
-
-#############################################################3
-
-def setTitleFormatGrammar(document, paragraphRead):
-##################33
-    paragraphWrite = document.add_heading(paragraphRead)
-
-    paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(30)
-    paragraph_format.space_after = Pt(10)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-    #paragraphWriteG.style = document.styles.add_style('TitleGrammar', WD_STYLE_TYPE.PARAGRAPH)
-    font = paragraphWrite.style.font
-    font.name = 'Cambria'
-    font.size = Pt(20)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(255,255,255)
-
-################
-
-
-
-    #paragraphWrite = document.add_heading(paragraphRead)
-    #font = paragraphWrite.style.font
-
-    #font.name = font_name
-
-    #paragraph_format = paragraphWrite.paragraph_format
-    #paragraph_format.space_before = Pt(10)
-    #paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-#############33
-    # Create XML element
-    shd = OxmlElement('w:shd')
-
-    # Add attributes to the element
-    shd.set(qn('w:val'), 'clear')
-    shd.set(qn('w:color'), '0,0,0')
-    shd.set(qn('w:fill'), '4F81BD')
-
-    paragraphWrite.paragraph_format.element.get_or_add_pPr()
-    paragraphWrite.paragraph_format.element.pPr.append(shd)
-    ##############
-
-    # paragraphWrite.style = document.styles.add_style(style, WD_STYLE_TYPE.PARAGRAPH)
-
-    #font.size = Pt(fontSizeTitle)
-    #font.bold = font_bold
-    #font.italic = True
-    #font.underline = font_underline
-    #font.color.rgb = RGBColor(255,255,255)
-    #paragraphWrite.font.rgb = RGBColor(0,0,0)
-
-    return paragraph_format
-
-def setTitleFormatGrammar1(document, paragraphRead):
-##################33
-    paragraphWrite = document.add_heading(paragraphRead)
-
-    paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(5)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-    paragraphWrite.style = document.styles.add_style('TitleGrammar', WD_STYLE_TYPE.PARAGRAPH)
-    font = paragraphWrite.style.font
-    font.name = 'Cambria'
-    font.size = Pt(26)
-    font.bold = font_bold
-    font.italic = font_italic
-    font.underline = font_underline
-    font.color.rgb = color
-
-
-    #shd = OxmlElement('w:shd')
-
-# Add attributes to the element
-    #shd.set(qn('w:val'), 'clear')
-    #shd.set(qn('w:color'), '0,0,0')
-    #shd.set(qn('w:fill'), '4F81BD')
-
-    #paragraphWrite.paragraph_format.element.get_or_add_pPr()
-    #paragraphWrite.paragraph_format.element.pPr.append(shd)
-
-def saveGanymedeLog(book):
-    now = datetime.now()
-    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    print("date and time:", date_time)
-
-    doc = docx.Document('website/temporal/GanymedeLogs.docx')
-
-    #fullText = []
-    #for para in doc.paragraphs:
-     #   fullText.append('crrrrrr' + para.text)
-      #  print(fullText)
-
-    paragraph = date_time + ' --- ' + book
-    doc.add_paragraph(paragraph)
-    doc.save('website/temporal/GanymedeLogs.docx')

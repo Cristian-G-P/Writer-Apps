@@ -1,193 +1,434 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-   <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css"
-      crossorigin="anonymous"
-    />
-
-
-    <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-
-    <title>{% block title %}Home{% endblock %}</title>
-
-
- <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="static/css/style.css">
-
- <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg py-2 sticky-top navbar-light bg-white">
-        <div class="container">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link href="data:image/x-icon;base64,AAABAAMAEBAAAAEAIABoBAAANgAAACAgAAABACAAKBEAAJ4EAAAwMAAAAQAgAGgmAADGFQAAKAAA
+         ABAAAAAgAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKoAAH6qAAD5qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA+aoAAH6qAAD5qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD5qgAA/6oA
+         AP+qAAD/qgAA/6wICP+sCAj/qgIC/6oAAP+qAAD/qgAA/6wICP+sCAj/qwIC/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/7ovL////////////8pfX/+qAAD/qgAA/7UjI////////////89vb/+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP/RdHT/8dXV/+Glpf/dmZn/qgAA/6oAAP/LYmL/9uTk/92Zmf/k
+         ra3/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/57m5/9qQkP/KX1//8NPT/6oAAP+qAAD/4KKi/+Gl
+         pf/ETU3/+Orq/6oBAf+qAAD/qgAA/6oAAP+qAAD/rAgI//z29v/ETk7/tycn//79/f+vEBD/qgAA
+         //Xi4v/MZmb/sBQU///+/v+4Kyv/qgAA/6oAAP+qAAD/qgAA/8BDQ//+/Pz/rxAQ/6oBAf/57e3/
+         wkhI/7UiIv//////tycn/6oAAP/y19f/zWpq/6oAAP+qAAD/qgAA/6oAAP/XiIj/7cvL/6oAAP+q
+         AAD/57e3/9WCgv/LYmL/9+bm/6oAAP+qAAD/3p2d/+KoqP+qAAD/qgAA/6oAAP+qAAD/7s3N/9eJ
+         if+qAAD/qgAA/9R/f//pvLz/4KKi/+KoqP+qAAD/qgAA/8tiYv/35ub/qgAA/6oAAP+qAAD/sRQU
+         //79/f/BR0f/qgAA/6oAAP/CR0f/+/Ly//bj4//NaWn/qgAA/6oAAP+3KCj//////7cmJv+qAAD/
+         qgAA/8dXV//9+fn/rgsL/6oAAP+qAAD/sBER//7+/v//////uCoq/6oAAP+qAAD/qgEB//jr6//L
+         ZWX/qgAA/6oAAP/enJz/68PD/6oAAP+qAAD/qgAA/6oAAP/Whob/2pGR/6oBAf+qAAD/qgAA/6oA
+         AP/lsrL/4KOj/6oAAP+qAAD/qgEB/6oBAf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgEB/6oBAf+qAAD/qgAA+aoAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA+aoAAH6qAAD5qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA+aoAAH4AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACAAAABAAAAAAQAg
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAKpAAB8qwAA5qoAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qwAA5qkAAHyAAAACqQAAfKoAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6kAAHyrAADm
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qwAA5qoAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgEB/68QEP+vEBD/rxAQ/68QEP+sCAj/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/68QEP+vEBD/rxAQ/68QEP+tCgr/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP++PDz//////////////////////+Ciov+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+2Jib//////////////////////+m+vv+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/9WBgf//////////////////////
+         89zc/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/8xlZf///////////////////////Pb2/6wHB/+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/7MbG////
+         ///w0tL/1oWF////////////shcX/6oAAP+qAAD/qgAA/6oAAP+qAAD/4aWl///////36en/0HJy
+         ////////////vjw8/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/68PD//++/v//////9WDg/+wFBT///7+///////FUVH/qgAA/6oAAP+qAAD/qgAA/6oAAP/2
+         5eX//////+Kpqf+rAgL/+vDw///////Te3v/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/xVBQ////////////wEJC/6oAAP/z2tr//////9iKiv+qAAD/qgAA
+         /6oAAP+qAAD/tiUl////////////zWpq/6oAAP/nuLj//////+i5uf+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/blZX///////z39/+tCAj/qgAA/+Ciov//
+         ////68XF/6oAAP+qAAD/qgAA/6oAAP/MZWX///////////+4Kyv/qgAA/9R+fv//////+/Pz/6sF
+         Bf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA//Pa2v//////6b6+
+         /6oAAP+qAAD/zWtr///////89/f/rAcH/6oAAP+qAAD/qgAA/+Glpf//////+Orq/6oBAf+qAAD/
+         wEND////////////vDc3/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+0
+         ICD////////////TfHz/qgAA/6oAAP+7MzP///////////+9OTn/qgAA/6oAAP+qAAD/9uXl////
+         ///jrKz/qgAA/6oAAP+uDAz//vv7///////Rdnb/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/8tlZf///////////707O/+qAAD/qgAA/6sFBf/89fX//////9Bzc/+qAAD/
+         qgAA/7YlJf///////////85tbf+qAAD/qgAA/6oAAP/uzc3//////+a0tP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/4qmp///////78/P/rAUF/6oAAP+qAAD/qgAA/+vC
+         wv//////5K2t/6oAAP+qAAD/zGVl////////////uS4u/6oAAP+qAAD/qgAA/9uTk///////+vDw
+         /6sDA/+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6sCAv/47Oz//////+e3t/+qAAD/
+         qgAA/6oAAP+qAAD/2IuL///////35+f/qgAA/6oAAP/hpaX///////ns7P+qAgL/qgAA/6oAAP+q
+         AAD/x1hY////////////uzIy/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/uzQ0////
+         ////////0XZ2/6oAAP+qAAD/qgAA/6oAAP/GU1P///////////+1IiL/qgAA//bl5f//////5K+v
+         /6oAAP+qAAD/qgAA/6oAAP+0Hh7////////////QcXH/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP/SeHj///////////+7NDT/qgAA/6oAAP+qAAD/qgAA/7MbG////////////8lcXP+3
+         Jib////////////PcHD/qgAA/6oAAP+qAAD/qgAA/6oAAP/14uL//////+SwsP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/+m9vf//////+e/v/6sDA/+qAAD/qgAA/6oAAP+qAAD/qgAA
+         //Xj4///////3JaW/8xlZf///////////7oxMf+qAAD/qgAA/6oAAP+qAAD/qgAA/+KoqP//////
+         +ezs/6oCAv+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+tCgr//Pj4///////ksLD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/46ur///////v0ND/4aWl///////57+//qwIC/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/zm1t////////////uS0t/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/8JISP//////////
+         /85ubv+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/Qc3P///////78/P/46ur//////+Wysv+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+7MjL////////////ObGz/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/2Y2N////////////uS0t/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/748PP//////////////
+         ////////0HNz/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6sEBP/78/P//////+Oqqv+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP/w0dH///////fp6f+qAQH/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         rQkJ//36+v////////////////+7NDT/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/+m9vf//
+         ////9+jo/6oBAf+qAAD/qgAA/6oAAP+qAAD/shgY///+/v//////4qmp/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/7svL////////////+vHx/6sDA/+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/1YKC////////////tykp/6oAAP+qAAD/qgAA/6oAAP/JXFz////////////MZ2f/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+0ICD/uS8v/7kvL/+3Jib/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/CSEj////////////MZ2f/qgAA/6oAAP+qAAD/qgAA/6oC
+         Av+rBAT/qwQE/6oBAf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oBAf+rBAT/qwQE/6oCAv+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+rAADmqgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qwAA5qkAAHyqAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+p
+         AAB8gAAAAqkAAHyrAADmqgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+rAADmqQAAfIAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAADAAAABgAAAA
+         AQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACqAAAPqQAAXKoAAMaqAAD2qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD2qgAAxqkAAFyqAAAPAAAAAKoAAA+pAACV
+         qgAA+KoAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAPipAACVqgAAD6kAAFyqAAD4qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD4qQAAXKoAAMaqAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAAxqoA
+         APaqAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA9qoAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qwQE/7IbG/+yGxv/shsb/7IbG/+yGxv/shsb/7EWFv+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgEB/7IbG/+yGxv/shsb/7IbG/+yGxv/shsb/7EX
+         F/+rAwP/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/xVJS////////////////////////////
+         //////Pd3f+yGRn/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/uS0t////////
+         //////////////////////////fm5v+7NTX/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/3p6e
+         //////////////////////////////////jp6f+/Pz//qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/0XR0//////////////////////////////////v09P/JXl7/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+vEBD/8dXV//////////////////////////////////z29v/MZmb/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/6Lq6////////////////////////////
+         ///////+/v/XiIj/qwQE/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP++Ozv/9+jo////////////8dXV/+Ci
+         ov/46Oj////////////ZjY3/rAUF/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+zGxv/9N3d
+         ////////////+e3t/9+env/z3d3////////////lsrL/sBER/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/N
+         aWn//Pf3////////////zGho/68QEP/krq7////////////ms7P/sBER/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP/BRUX/+ezs////////////4aSk/6wGBv/akZH////////////z29v/tB8f
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/60ICP/cl5f////////////79fX/uS0t/6sEBP/YiYn////////////y
+         2tr/tB4e/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/PcHD//fr6////////////yV9f/6oA
+         AP/Namr//Pf3///////++/v/vTk5/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7IXF//rxcX////////////uzMz/
+         sxoa/6oAAP/LZGT//Pb2///////9+vr/uzMz/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/60JCf/d
+         mpr////////////78/P/uCkp/6oAAP/AQ0P/+Ovr////////////03p6/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /7grK//57+/////////////foaH/rgsL/6oAAP+/Pz//+Onp////////////zm5u/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/7IXF//sxcX////////////tysr/shkZ/6oAAP+zGxv/9N3d////////
+         ////6r+//6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/8tjY/////////////37+//RdXX/qgEB/6oAAP+zGhr/9N3d
+         ////////////5K+v/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7cmJv/67+/////////////foKD/
+         rgsL/6oAAP+rAgL/6b6+/////////////Pf3/64NDf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/+Svr/////////////nt
+         7f/CSUn/qgAA/6oAAP+qAQH/6sDA////////////+Orq/6sEBP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /8dYWP////////////77+//Rdnb/qgEB/6oAAP+qAAD/1ICA/////////////////8NLS/+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/rgwM//ru7v////////////Te3v+0Hh7/qgAA/6oAAP+qAAD/1oOD/////////////////7ov
+         L/+qAAD/qgAA/6oAAP+qAAD/qgAA/9+env////////////nu7v/DTEz/qgAA/6oAAP+qAAD/vz8/
+         /////////////////9qQkP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/wkhI/////////////////+i6uv+rAgL/qgAA/6oAAP+q
+         AAD/wUVF/////////////////89wcP+qAAD/qgAA/6oAAP+qAAD/qgEB//bl5f////////////Xg
+         4P+1IiL/qgAA/6oAAP+qAAD/rQkJ//z19f///////////+7Nzf+sBgb/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/25SU////////////
+         /////9F0dP+qAAD/qgAA/6oAAP+qAAD/rg0N//35+f///////////+Svr/+qAQH/qgAA/6oAAP+q
+         AAD/uS0t/////////////////+vExP+rAgL/qgAA/6oAAP+qAAD/qgAA/+i9vf////////////bj
+         4/+4Kyv/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+uDQ3/79DQ/////////////////7ksLP+qAAD/qgAA/6oAAP+qAAD/qgAA/+3Jyf//////
+         //////LY2P+wEhL/qgAA/6oAAP+qAAD/0XR0/////////////////9WBgf+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/9N8fP////////////rw8P/GVFT/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+8NTX/9+bm////////////9N/f/6sDA/+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/9iLi/////////////fn5/+8ODj/qgAA/6oAAP+qAAD/6Lq6////////////
+         /////748PP+qAAD/qgAA/6oAAP+qAAD/qgAA/749Pf///f3///////79/f/Ufn7/qwIC/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/LY2P//PX1////
+         ////////3ZmZ/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/8RPT////v7///////v09P/KXl7/qgAA
+         /6oAAP+zGxv/9N3d////////////+vDw/6sFBf+qAAD/qgAA/6oAAP+qAAD/qgAA/7UhIf/14uL/
+         ///////////iqKj/rg4O/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6wHB//akZH///7+/////////v7/xVJS/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7cn
+         J//57e3///////79/f/WhYX/qwMD/6oAAP/BRUX/+ezs////////////5K+v/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/7EUFP/ourr////////////w0dH/sxsb/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7EVFf/qv7/////////////36en/tiYm/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/7IZGf/tycn////////////jq6v/rw8P/6oAAP/PcHD//fr6////
+         ////////zWlp/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6wHB//bk5P////////////89/f/ui4u
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7cnJ//46+v/
+         ///////////pv7//sRUV/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/64MDP/gpKT////////////w
+         0tL/sxwc/60JCf/em5v////////////89vb/uS4u/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP/ObGz//fj4////////////zWpq/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/8hZWf///v7////////+/v/bk5P/rAcH/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6sCAv/Uf3///v39///////79PT/ui8v/7IXF//sxcX////////////v0ND/sxsb/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/BRUX/+Ozs////////////5K+v/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/+Glpf////////////z39//MZ2f/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/IWlr/+/Ly////////////ymFh/7cmJv/67+//
+         ///////////hpqb/rg0N/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+0Hh7/9N7e////////
+         ////+vDw/6sFBf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/rAYG//js
+         7P////////////fo6P++Ozv/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+7NTX/9+bm
+         ////////////4KGh/8hYWP////////////78/P/TfHz/qgEB/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAgL/68PD/////////////////707O/+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/vj4+//////////////////HW1v+wEhL/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+wERH/8tjY////////////9N/f/9+hof////////////rw8P/FUlL/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/1oWF/////////////////9SAgP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/2IqK/////////////////+Clpf+q
+         AQH/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAQH/5bCw/////////////v39//vx
+         8f////////////Xi4v+3KCj/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/wURE
+         /////////////////+vDw/+qAgL/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+tBwf/
+         7s7O/////////////////8ldXf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/0HNz/////////////////////////////////+3Ly/+sBQX/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/rQsL//z39/////////////Tf3/+1ISH/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+6Ly//9uTk/////////////fr6/7IaGv+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/uzU1/////////////////////////////////9iLi/+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/+rBwf////////////nt
+         7f/DSkr/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP/JXV3/+/Pz////////////7crK
+         /6oBAf+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/rAYG//rx8f//////
+         /////////////////////8FGRv+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/9WAgP////////////77+//RdHT/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6sE
+         BP/Yi4v///7+////////////1YKC/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/+i5uf///////////////////////PX1/60KCv+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/8BCQv/+/f3////////////fnp7/rQoK/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/7ATE//oubn////////////9+vr/vz8//6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/8leXv/kr6//5K+v/+Svr//kr6//2IqK
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7UiIv/25OT/
+         ///////////sx8f/shgY/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/7YjI//35+f////////////z
+         3Nz/tB8f/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6wH
+         B/+vEBD/rxAQ/68QEP+vEBD/rgsL/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/7EVFf/pvb3////////////68PD/tycn/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oBAf+sBwf/rAcH/6wHB/+rBQX/qgEB/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+rBQX/rAcH/6wHB/+sBwf/qgEB
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAPaqAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA9qoAAMaqAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAAxqkAAFyqAAD4qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA
+         /6oAAP+qAAD/qgAA/6oAAP+qAAD4qQAAXKoAAA+pAACVqgAA+KoAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oA
+         AP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAPipAACVqgAADwAAAACqAAAPqQAA
+         XKoAAMaqAAD2qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/
+         qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+q
+         AAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD/qgAA/6oAAP+qAAD2qgAAxqkA
+         AFyqAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         AAAAAAAAAAAAAAAAAAAAAA==" rel="icon" type="image/x-icon" />
+      <!-- CSS only -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css"
+         crossorigin="anonymous"
+         />
+      <!-- JavaScript Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+      <title>{% block title %}Home{% endblock %}</title>
+      <link rel="stylesheet" href="static/css/bootstrap.min.css">
+      <link rel="stylesheet" href="static/css/boxicons.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+      <link rel="stylesheet" href="static/css/style.css">
+      <!-- NAVBAR -->
+      <nav class="navbar navbar-expand-lg py-2 sticky-top navbar-light bg-white">
+         <div class="container">
             <a class="navbar-brand" href="/#home">
-                <img class="logo" src="static/img/logo.svg" alt="">
+            <img class="logo" src="static/img/logo.svg" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#home">Home</a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#tools">Tools</a>
-                    </li>
-
-
+               <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="/#home">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/#features">Features</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/#tools">Tools</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/#media">Media</a>
+                  </li>
+                  <!--
                      <li class="nav-item">
-                        <a class="nav-link" href="/#media">Media</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#contact">Contact</a>
-                    </li>
-                </ul>
-
+                         <a class="nav-link" href="/blog">Blog</a>
+                     </li>
+                     -->
+                  <li class="nav-item">
+                     <a class="nav-link" href="/#contact">Contact</a>
+                  </li>
+               </ul>
             </div>
-        </div>
-    </nav><!-- //NAVBAR -->
-
-
-
-  </head>
-  <body>
-
-
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
-    <div class="alert alert-danger alter-dismissable fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% else %}
-    <div class="alert alert-success alter-dismissable fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% endif %} {% endfor %} {% endif %} {% endwith %}
-
-{% block content %}{% endblock %}
-
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='index.js') }}"
-    ></script>
-  </body>
-<footer>
-            <div class="footer-top">
-               <div class="container">
-                  <div class="row gy-4">
-                     <div class="col-lg-4">
-                         <a class="navbar-brand" href="/#home">
-                        <img class="logo" src="static/img/logo-dark.jpg" alt="">
-                             </a>
-                     </div>
-
-                     <div class="col-lg-2">
-                        <h5 class="text-white">Tools</h5>
-                        <ul class="list-unstyled">
-                           <li><a href="/callisto">Callisto</a></li>
-                           <li><a href="/ganymede">Ganymede</a></li>
-                           <li><a href="/io">Io</a></li>
-                           <li><a href="#">Europa</a></li>
-                        </ul>
-                     </div>
-                     <div class="col-lg-2">
-                        <h5 class="text-white">More</h5>
-                        <ul class="list-unstyled">
-                           <li><a href="/#features">Features</a></li>
-                           <li><a href="/#media">Media</a></li>
-                           <li><a href="/#contact">Contact</a></li>
-                        </ul>
-                     </div>
-
-
-
-
-
-
-
-
-                      <div class="col-lg-3">
-                          <div class="row">
-                        <div class="social-icons2">
-                            <a href="#" class ="text-white"><i class='bx bx-envelope'></i></a>
-                            <a href="#" class ="text-white"><i class='bx bxl-instagram-alt'></i></a>
-                           <a href="#" class ="text-white"><i class='bx bxl-youtube'></i></a>
-
-                        </div>
-                           </div>
-                           <div class="row">
-                           <ul class="list-unstyled">
-                           <li><a href="#">cristiang.p.@writerTools.com</a></li>
-                           <li><a href="#">/cristiang.p.</a></li>
-                           <li><a href="#">www.youtube.com/cristiang.p.</a></li>
-
-                        </ul>
-                     </div>
-</div>
-
-
-
-
-                  </div>
+         </div>
+      </nav>
+      <!-- //NAVBAR -->
+   </head>
+   <body>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      'error' %}
+      <div class="alert alert-danger alter-dismissable fade show" role="alert">
+         {{ message }}
+         <button type="button" class="close" data-dismiss="alert">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alter-dismissable fade show" role="alert">
+         {{ message }}
+         <button type="button" class="close" data-dismiss="alert">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %}
+      {% block content %}{% endblock %}
+      <script
+         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+         crossorigin="anonymous"
+         ></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+         crossorigin="anonymous"
+         ></script>
+      <script
+         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+         crossorigin="anonymous"
+         ></script>
+      <script
+         type="text/javascript"
+         src="{{ url_for('static', filename='index.js') }}"
+         ></script>
+   </body>
+   <footer>
+      <div class="footer-top">
+         <div class="container">
+            <div class="row gy-4">
+               <div class="col-lg-4">
+                  <a class="navbar-brand" href="/#home">
+                  <img class="logo" src="static/img/logo-dark.jpg" alt="">
+                  </a>
                </div>
-            </div>
-            <div class="footer-bottom py-3">
-               <div class="container">
+               <div class="col-lg-2">
+                  <h5 class="text-white">Tools</h5>
+                  <ul class="list-unstyled">
+                     <li><a href="/callisto">Callisto</a></li>
+                     <li><a href="/ganymede">Ganymede</a></li>
+                     <li><a href="/io">Io</a></li>
+                     <li><a href="#">Europa</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-2">
+                  <h5 class="text-white">More</h5>
+                  <ul class="list-unstyled">
+                     <li><a href="/#features">Features</a></li>
+                     <li><a href="/#media">Media</a></li>
+                     <li><a href="/blog">Blog</a></li>
+                     <li><a href="/#contact">Contact</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-3">
                   <div class="row">
-                     <div class="col-md-6">
-                        <p class="mb-0">© 2022 copyright all rights reserved |</p>
-                        <p class="mb-0"> Designed with <i
-                           class="bx bx-heart text-danger">
-                           </i> by <a
-                              class="text-white">CRISTIAN G. P.
-                           </a>
-                        </p>
-                        <p class="mb-0"> Based on
-                            <a  href="https://www.youtube.com/channel/UCYMEEnLzGGGIpQQ3Nu_sBsQ"
-                                class="text-white">SA7MAN</a>
-                        </p>
-
+                     <div class="social-icons2">
+                        <a href="#" class ="text-white"><i class='bx bx-envelope'></i></a>
+                        <a href="#" class ="text-white"><i class='bx bxl-instagram-alt'></i></a>
+                        <a href="#" class ="text-white"><i class='bx bxl-youtube'></i></a>
                      </div>
-
+                  </div>
+                  <div class="row">
+                     <ul class="list-unstyled">
+                        <li><a href="#">cristiang.p.@writerTools.com</a></li>
+                        <li><a href="#">/cristiang.p.</a></li>
+                        <li><a href="#">www.youtube.com/cristiang.p.</a></li>
+                     </ul>
                   </div>
                </div>
             </div>
-         </footer>
+         </div>
+      </div>
+      <div class="footer-bottom py-3">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <p class="mb-0">© 2022 copyright all rights reserved |</p>
+                  <p class="mb-0"> Designed with <i
+                     class="bx bx-heart text-danger">
+                     </i> by <a
+                        class="text-white">CRISTIAN G. P.
+                     </a>
+                  </p>
+                  <p class="mb-0"> Based on
+                     <a  href="https://www.youtube.com/channel/UCYMEEnLzGGGIpQQ3Nu_sBsQ"
+                        class="text-white">SA7MAN</a>
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </footer>
 </html>

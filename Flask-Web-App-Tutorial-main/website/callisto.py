@@ -1,16 +1,12 @@
 import docx
 from docx import Document
-
-from .auxFunctions import *
-from .values import *
+from .callistoAuxFunctions import *
 from datetime import datetime
 
 
-
 def formatText(file, dataFromHtml):
-
     document = Document()
-    doc = docx.Document('website/temporal/' + file.filename)
+    doc = docx.Document(PATH_TEMPORAL + file.filename)
 
     document.styles
     setSectionFormat(document, dataFromHtml, doc)
@@ -45,11 +41,6 @@ def formatText(file, dataFromHtml):
     chapterStyle.hidden = False
     chapterStyle.quick_style = True
     chapterStyle.priority = 1
-    #chapterStyle.font = dataFromHtml.ChapterTitleFont
-
-
-
-    #setDedicationFormat(document, titleText, subtitleText)
 
     while paragraphReadChapterCount < len(doc.paragraphs):
         paragraphRead = doc.paragraphs[paragraphReadChapterCount].text.strip()
@@ -59,17 +50,15 @@ def formatText(file, dataFromHtml):
         isParagraphDedication = isParagraphADedication(paragraphReadChapterCount, doc)
 
         isParagraphPart = isParagraphAPart(paragraphReadChapterCount, doc)
-        #print(paragraphRead)
+
         if isParagraphPart:
             setPartFormat(document, paragraphRead)
             isPreviousAPart = True
-         #   print('part')
 
         elif chapterDescription:
             if (len(paragraphRead.strip()) > 0):
                 setChapterDescriptionFormat(document, paragraphRead, isPreviousAPart, dataFromHtml)
                 chapterDescription = False
-          #      print('descriptio')
 
         elif isParagrapahChapterTitle:
             setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml)
@@ -77,14 +66,12 @@ def formatText(file, dataFromHtml):
             isPreviousAPart = False
             if hasChapterDescription:
                 chapterDescription = True
-           # print('chaptretitle')
 
         elif isParagraphDedication:
             setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml)
             indentFirstLine = False
             isPreviousAPart = False
             chapterDescription = False
-            #print('dedication')
 
         else:
             setChapterFormat(document, paragraphRead, doc, paragraphReadChapterCount, indentFirstLine, dataFromHtml,chapterDescription)
@@ -92,22 +79,19 @@ def formatText(file, dataFromHtml):
                 indentFirstLine = True
                 isPreviousAPart = False
                 chapterDescription = False
-            #print('chapter')
 
         paragraphReadChapterCount = paragraphReadChapterCount + 1
 
-    #setSectionFormat(document, dataFromHtml, countWords)
-    #print(countWords)
-    document.save('website/temporal/' + dataFromHtml.bookTitle+ ' - Formatted by Callisto' + '.docx')
+    document.save(PATH_TEMPORAL + dataFromHtml.bookTitle+ ' - Formatted by Callisto' + '.docx')
 
     saveCallistoLog(dataFromHtml.bookTitle, dataFromHtml.author)
+
 def saveCallistoLog(book, author):
     now = datetime.now()
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 
-
-    doc = docx.Document('website/temporal/CallistoLogs.docx')
+    doc = docx.Document(PATH_TEMPORAL + 'CallistoLogs.docx')
 
     paragraph = date_time + ' --- ' + book + ' --- ' + author
     doc.add_paragraph(paragraph)
-    doc.save('website/temporal/CallistoLogs.docx')
+    doc.save(PATH_TEMPORAL + 'CallistoLogs.docx')

@@ -1,29 +1,26 @@
 {% extends "base.html" %} {% block title %}DownloadGanymede{% endblock %} {% block
 content %}
-<head>
-</head>
+<head></head>
 <body >
-<section id="ganymedeDownloadSection" class="vh-100">
-   <br />
-
+   <section id="ganymedeDownloadSection" class="vh-100">
+      <br />
       <div class="col text-center">
-          <h7  class="display-h7" align="center">Your text has been analyzed by Ganymede</h7>
+         <h7  class="display-h7" align="center">Your text has been analyzed by Ganymede</h7>
       </div>
-
-   <br />
-   <form>
-      <div id="downloadDiv" name="downloadDiv">
-         <div class="col text-center">
-             <a class="display-tools btn btn-link" id=download name=download href="{{url_for('.download_file_ganymede')}}">Click here to download your document</a>
+      <br />
+      <form>
+         <div id="downloadDiv" name="downloadDiv">
+            <div class="col text-center">
+               <a class="display-tools btn btn-link" id=download name=download href="{{url_for('.download_file_ganymede')}}">Click here to download your document</a>
+            </div>
          </div>
-      </div>
-      <div class="row"><br /></div>
-      <div class="row"><br /></div>
-      <div class="row"><br /> </div>
-      <div class="row"><br /></div>
-      <div class="row"><br /></div>
-      <div class="row"><br /> </div>
-   </form>
+         <div class="row"><br /></div>
+         <div class="row"><br /></div>
+         <div class="row"><br /> </div>
+         <div class="row"><br /></div>
+         <div class="row"><br /></div>
+         <div class="row"><br /> </div>
+      </form>
    </section>
 </body>
 <script>
