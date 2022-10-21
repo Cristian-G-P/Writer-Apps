@@ -1,8 +1,8 @@
-{% extends "base.html" %} {% block title %}DownloadGanymede{% endblock %} {% block
+{% extends "base.html" %} {% block title %}AXORAS{% endblock %} {% block
 content %}
 <head></head>
 <body >
-   <section id="ganymedeDownloadSection" class="vh-100">
+   <section id="ganymedeDownloadSection" >
       <br />
       <div class="col text-center">
          <h7  class="display-h7" align="center">Your text has been analyzed by Ganymede</h7>
@@ -11,15 +11,10 @@ content %}
       <form>
          <div id="downloadDiv" name="downloadDiv">
             <div class="col text-center">
-               <a class="display-tools btn btn-link" id=download name=download href="{{url_for('.download_file_ganymede')}}">Click here to download your document</a>
+               <a class="display-tools btn btn-link" id=download name=download href="{{url_for('.download_file_ganymede', book=book)}}">Click here to download your document</a>
             </div>
          </div>
-         <div class="row"><br /></div>
-         <div class="row"><br /></div>
-         <div class="row"><br /> </div>
-         <div class="row"><br /></div>
-         <div class="row"><br /></div>
-         <div class="row"><br /> </div>
+         <br/>
       </form>
    </section>
 </body>

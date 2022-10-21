@@ -1,217 +1,83 @@
 from .values import *
-from docx.oxml.shared import OxmlElement
-from docx.shared import Pt, Cm
+from docx.shared import Pt
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.enum.style import WD_STYLE_TYPE
-from datetime import datetime
-import docx
 
 
-def isParagraphAChapter(paragraphReadChapterCount, doc):
-    isParagraphChapterTitle: bool = False
+def setParagraphType(paragraph):
+    if paragraph[:7].upper() == CHAPTER_TEXT:
+        type = CHAPTER_TEXT
+    elif paragraph[:10].upper() == DEDICATION_TEXT:
+        type = EXTRA_SECTION
+    elif paragraph[:14].upper() == ACKNOWLEDGMENT_TEXT:
+        type = EXTRA_SECTION
+    elif paragraph[:9].upper() == BIOGRAPHY_TEXT:
+        type = EXTRA_SECTION
+    elif paragraph[:16].upper() == ABOUT_THE_AUTHOR_TEXT:
+        type = EXTRA_SECTION
+    elif paragraph[:4].upper() == PART_TEXT:
+        type = PART_TEXT
+    elif paragraph[:3] == SCENE_BREAK_1:
+        type = SCENE_BREAK_1
+    elif paragraph[:3] == SCENE_BREAK_2:
+        type = SCENE_BREAK_2
+    else:
+        type = PARAGRAPH
 
-    if (paragraphReadChapterCount) < len(doc.paragraphs):
-        paragraphReadAux = doc.paragraphs[paragraphReadChapterCount].text.strip()
-        firstOccurenceAux: int = paragraphReadAux.upper().find(CHAPTER_TEXT.upper())
+    return type
 
-        if firstOccurenceAux == 0:
-            isParagraphChapterTitle = True
-        else:
-            isParagraphChapterTitle = False
-
-    return isParagraphChapterTitle
-
-def isParagraphADedication(paragraphReadChapterCount, doc):
-    isParagraphADedication: bool = False
-
-    if (paragraphReadChapterCount) < len(doc.paragraphs):
-        paragraphReadAux = doc.paragraphs[paragraphReadChapterCount].text.strip()
-        firstOccurenceAux: int = paragraphReadAux.upper().find(DEDICATION_TEXT.upper())
-
-        if firstOccurenceAux == 0:
-            isParagraphADedication = True
-
-        else:
-            isParagraphADedication = False
-
-    return isParagraphADedication
-
-def isParagraphAPart(paragraphReadChapterCount, doc):
-    isParagraphAPart: bool = False
-
-    if (paragraphReadChapterCount) < len(doc.paragraphs):
-        paragraphReadAux = doc.paragraphs[paragraphReadChapterCount].text.strip()
-        firstOccurenceAux: int = paragraphReadAux.upper().find(PART_TEXT.upper())
-
-        if firstOccurenceAux == 0:
-            isParagraphAPart = True
-
-        else:
-            isParagraphAPart = False
-
-    return isParagraphAPart
-
-def isPreviousNotEmptyParagraphAPart(paragraphReadChapterCount, doc):
-    isParagraphAPart: bool = False
-
-    while (paragraphReadChapterCount > 0):
-        paragraphReadAux = doc.paragraphs[paragraphReadChapterCount - 1].text.strip()
-        if (len(paragraphReadAux)>0):
-            firstOccurenceAux: int = paragraphReadAux.upper().find(PART_TEXT.upper())
-
-            if firstOccurenceAux == 0:
-                isParagraphAPart = True
-            else:
-                isParagraphAPart = False
-            break
-
-        paragraphReadChapterCount = paragraphReadChapterCount - 1
-
-    return isParagraphAPart
-
-
-def setIdentitation(paragraphReadChapterCount, doc, indent):
-    indentFirstLine = indent
-
-    previousParagraphNotEmpty = doc.paragraphs[paragraphReadChapterCount - 1].text.strip()
-
-    counter = 1
-
-    while counter < paragraphReadChapterCount:
-        if (len(doc.paragraphs[paragraphReadChapterCount - counter].text.strip()) > 0):
-            previousParagraphNotEmpty = doc.paragraphs[paragraphReadChapterCount - counter].text
-            break
-        counter = counter + 1
-
-    if previousParagraphNotEmpty.strip() == '***':
-        indentFirstLine = False
-
-    if previousParagraphNotEmpty.strip() == '###':
-        indentFirstLine = False
-
-    return indentFirstLine
 
 def setHalfTitleFormat(document, dataFromHtml):
-
     paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle)
-    style = document.styles.add_style('HalfTitle1', WD_STYLE_TYPE.PARAGRAPH)
-    paragraphWrite.style = style
-
-    paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(150)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-    font = paragraphWrite.style.font
-    font.name = dataFromHtml.HalfTitleFont
-    size = int(dataFromHtml.HalfTitleFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(0, 0, 0)
+    paragraphWrite.style = document.styles['Book Title']
 
     document.add_section()
     document.add_section()
 
 def setTitleFormat(document, dataFromHtml):
-    paragraphWrite1 = document.add_paragraph(dataFromHtml.bookTitle)
-    style = document.styles.add_style('TitlePageTitle', WD_STYLE_TYPE.PARAGRAPH)
-    paragraphWrite1.style = style
-
-    paragraph_format = paragraphWrite1.paragraph_format
-    paragraph_format.space_before = Pt(150)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-    font = paragraphWrite1.style.font
-    font.name = dataFromHtml.TitlePageFont
-    size = int(dataFromHtml.TitlePageFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(0, 0, 0)
+    paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle)
+    paragraphWrite.style = document.styles['Book Title']
 
     paragraphWrite2 = document.add_paragraph(dataFromHtml.bookSubTitle)
-    style = document.styles.add_style('TitlePageSubtitle', WD_STYLE_TYPE.PARAGRAPH)
-    paragraphWrite2.style = style
-
-    paragraph_format = paragraphWrite2.paragraph_format
-    paragraph_format.space_before = Pt(10)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-    font = paragraphWrite2.style.font
-    font.name = dataFromHtml.SubtitleFont
-    size = int(dataFromHtml.SubtitleFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(0, 0, 0)
+    paragraphWrite2.style = document.styles['Book Subtitle']
 
     document.add_paragraph('')
-    paragraphWrite3 = document.add_paragraph(dataFromHtml.author)
-    style = document.styles.add_style('Author', WD_STYLE_TYPE.PARAGRAPH)
-    paragraphWrite3.style = style
+    document.add_paragraph('')
+    document.add_paragraph('')
+    document.add_paragraph('')
+    document.add_paragraph('')
+    document.add_paragraph('')
 
-    paragraph_format = paragraphWrite3.paragraph_format
-    paragraph_format.space_before = Pt(10)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-    font = paragraphWrite3.style.font
-    font.name = dataFromHtml.AuthorFont
-    size = int(dataFromHtml.AuthorFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(0, 0, 0)
+    paragraphWrite3 = document.add_paragraph(dataFromHtml.author.upper())
+    paragraphWrite3.style = document.styles['Author']
 
     document.add_section()
 
-
 def setCopyrightFormat(document, dataFromHtml):
-    style = document.styles.add_style('Copyright1', WD_STYLE_TYPE.PARAGRAPH)
+    i= 0
+    while i <= 22:
+        document.add_paragraph('')
+        i = i + 1
 
     paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle +' by ' + dataFromHtml.author)
-    paragraphWrite.style = style
-    paragraph_format = paragraphWrite.paragraph_format
-    paragraph_format.space_before = Pt(250)
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    paragraphWrite.style = document.styles['Copyright']
 
-    paragraphWrite = document.add_paragraph('Copyright 2022 by ' + dataFromHtml.author)
-    paragraphWrite.style = style
+    paragraphWrite = document.add_paragraph('Copyright© 2022 ' + dataFromHtml.author)
+    paragraphWrite.style = document.styles['Copyright']
 
     paragraphWrite = document.add_paragraph(COPYRIGHT_TEXT)
-    paragraphWrite.style = style
-    ISBN = str(dataFromHtml.ISBN)
+    paragraphWrite.style = document.styles['Copyright']
 
-    paragraphWrite = document.add_paragraph('ISBN: ' + ISBN)
-    paragraphWrite.style = style
-
-    paragraphWrite.paragraph_format
-
-    font = paragraphWrite.style.font
-    font.name = dataFromHtml.CopyrightFont
-    size = int(dataFromHtml.CopyrightFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = False
-    font.color.rgb = RGBColor(0, 0, 0)
+    paragraphWrite = document.add_paragraph('ISBN: XXXX-XXXX')
+    paragraphWrite.style = document.styles['Copyright']
 
     document.add_section()
 
 
 def setPartFormat(document, paragraphRead):
-
     paragraphWrite = document.add_paragraph(paragraphRead)
+    paragraphWrite.style = document.styles['Part']
 
-    paragraph_format = paragraphWrite.paragraph_format
-
-    paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-    font = paragraphWrite.style.font
-
-    font.size = Pt(14)
-
-
-def setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml):
+def setChapterTitleFormat(document, paragraphRead, isPreviousAPart):
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Title']
 
@@ -224,17 +90,8 @@ def setChapterTitleFormat(document, paragraphRead, isPreviousAPart, dataFromHtml
     paragraph_format.space_after = Pt(20)
     paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
-    font = paragraphWrite.style.font
-    font.name = dataFromHtml.ChapterTitleFont
-    size = int(dataFromHtml.ChapterTitleFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = False
-    font.underline = font_underline
-    font.color.rgb = color
 
-
-def setChapterDescriptionFormat(document, paragraphRead, isPreviousAPart, dataFromHtml):
+def setChapterDescriptionFormat(document, paragraphRead):
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Description']
 
@@ -246,78 +103,53 @@ def setChapterDescriptionFormat(document, paragraphRead, isPreviousAPart, dataFr
     paragraph_format.right_indent = Inches(0.7)
     paragraph_format.left_indent = Inches(0.7)
 
-    font = paragraphWrite.style.font
-    font.name = dataFromHtml.ChapterDescriptionFont
-    size = int(dataFromHtml.ChapterDescriptionFontSize)
-    font.size = Pt(size)
-    font.bold = False
-    font.italic = True
+def setParagraphFormat(document, paragraphRead, indentFirstLine, paragrapghReadNext, chapterDescription, previousTitle, data):
+    paragraphWrite = document.add_paragraph(paragraphRead)
 
-    font.color.rgb = RGBColor(0, 0, 0)
-
-def setChapterFormat(document, paragraphRead, doc, paragraphReadChapterCount, indentFirstLine, dataFromHtml, chapterDescription):
-
-    if (len(paragraphRead.strip()) > 0):
-
-        paragraphWrite = document.add_paragraph(paragraphRead)
-        font = paragraphWrite.style.font
-        font.name = dataFromHtml.ParagraphFont
-        size = int(dataFromHtml.ParagraphFontSize)
-        font.size = Pt(size)
-
-        font.bold = False
-        if dataFromHtml.ChapterDescription == 'Yes' and chapterDescription:
-            font.italic = True
-
+    if (chapterDescription):
+        paragraphWrite.style = document.styles['Chapter Description']
+    else:
+        if data.PublishOrEdit == 'toEdit':
+            paragraphWrite.style = document.styles['Paragraph Editor']
+            font = paragraphWrite.style.font
+            font.size = Pt(12)
         else:
-            font.italic = False
+            paragraphWrite.style = document.styles['Paragraph']
+            font = paragraphWrite.style.font
+            font.size = Pt(11)
 
-        font.underline = False
-        font.color.rgb = RGBColor(0, 0, 0)
+    paragraph_format = paragraphWrite.paragraph_format
+    paragraph_format.keep_together = keep_together
 
-        paragraph_format = paragraphWrite.paragraph_format
-        interlining = float(dataFromHtml.Interlining)
-        paragraph_format.line_spacing = interlining
+    if indentFirstLine:
+        paragraph_format.first_line_indent = Pt(18)
 
-        paragraph_format.space_before = Pt(before_spacing)
-        paragraph_format.space_after = Pt(after_spacing)
-        paragraph_format.keep_together = keep_together
-        paragraph_format.keep_with_next = keep_with_next
+    typeNextParagraph = setParagraphType(paragrapghReadNext)
 
-        if (paragraphRead.strip() == '***') or (paragraphRead.strip() == '###'):
-            paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-        elif ( (dataFromHtml.Justification == 'CENTER') or (dataFromHtml.ChapterDescription == 'Yes' and chapterDescription)):
-            paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-        elif (dataFromHtml.Justification == 'JUSTIFY') :
-            paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    if (typeNextParagraph == PART_TEXT or typeNextParagraph == CHAPTER_TEXT or typeNextParagraph == EXTRA_SECTION) :
+        if previousTitle == EXTRA_SECTION:
+            document.add_section()
+            document.add_section()
         else:
-            paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+            document.add_section()
 
-        indentFirstLine = setIdentitation(paragraphReadChapterCount, doc, indentFirstLine)
-
-        if indentFirstLine:
-            paragraph_format.first_line_indent = Pt(18)
-
-    isPreviousAPart = isPreviousNotEmptyParagraphAPart(paragraphReadChapterCount, doc)
-    isNextParagrapahChapterTitle = isParagraphAChapter(paragraphReadChapterCount + 1, doc)
-    isNextParagrapahPart = isParagraphAPart(paragraphReadChapterCount + 1, doc)
-
-
-    if (isNextParagrapahChapterTitle or isNextParagrapahPart) and (not isPreviousAPart):
-        document.add_section()
-
+def setSceneBreakFormat(document, paragraph):
+    paragraphWrite = document.add_paragraph(paragraph)
+    paragraphWrite.style = document.styles['Scene Break']
 
 def setSectionFormat(document, dataFromHtml, doc):
     section = document.sections[0]
-    paragraphReadChapterCount=0
-    countWords = 0
 
-    while paragraphReadChapterCount < len(doc.paragraphs):
-        paragraphRead = doc.paragraphs[paragraphReadChapterCount].text.strip()
-        count = paragraphRead.split(" ")
-        countWords = countWords + len(count)
-        paragraphReadChapterCount = paragraphReadChapterCount + 1
+    #paragraphsCount = len(doc.paragraphs)
+    #paragraphReadChapterCount = 0
+    #countWords = 0
+    #while paragraphReadChapterCount < paragraphsCount:
+     #   paragraphRead = doc.paragraphs[paragraphReadChapterCount].text.strip()
+      #  count = paragraphRead.split(" ")
+       # countWords = countWords + len(count)
+        #paragraphReadChapterCount = paragraphReadChapterCount + 1
 
+    countWords = 100000
     if dataFromHtml.PageSize == '5" x 8" (12.7 x 20.32 cm)':
         section.page_width = Inches(5)
         section.page_height = Inches(8)
@@ -346,67 +178,47 @@ def setSectionFormat(document, dataFromHtml, doc):
     section.top_margin = Inches(0.8)
     section.bottom_margin = Inches(0.8)
 
-    if dataFromHtml.OutsideMargin == '0.3 in (7.6 mm)':
-        section.right_margin = Inches(0.3)
-    if dataFromHtml.OutsideMargin == '0.25 in (6.4 mm)':
-        section.right_margin = Inches(0.25)
-    if dataFromHtml.OutsideMargin == '1 in (25.4 mm)':
+    if dataFromHtml.PublishOrEdit == 'toEdit':
+        section.left_margin = Inches(1)
         section.right_margin = Inches(1)
-
-    pageCount = countWords/250
-
-    if pageCount < 150:
-        marginCalc = 0.375
-    elif pageCount < 300:
-        marginCalc = 0.5
-    elif pageCount < 500:
-        marginCalc = 0.625
-    elif pageCount < 700:
-        marginCalc = 0.75
-    elif pageCount < 828:
-        marginCalc = 0.875
     else:
-        marginCalc= 0.875
+        section.right_margin = Inches(0.3)
 
-    margin = 0.375
+        pageCount = countWords/250
 
-    if dataFromHtml.InsideMargin =="0.375 in (9.6 mm)":
+        if pageCount < 150:
+            marginCalc = 0.375
+        elif pageCount < 300:
+            marginCalc = 0.5
+        elif pageCount < 500:
+            marginCalc = 0.625
+        elif pageCount < 700:
+            marginCalc = 0.75
+        elif pageCount < 828:
+            marginCalc = 0.875
+        else:
+            marginCalc = 0.875
+
         margin = 0.375
-    if dataFromHtml.InsideMargin =="0.5 in (12.7 mm)":
-        margin = 0.5
-    if dataFromHtml.InsideMargin =="0.625 in (15.9 mm)":
-        margin = 0.625
-    if dataFromHtml.InsideMargin =="0.75 in (19.1 mm)":
-        margin = 0.75
-    if dataFromHtml.InsideMargin =="0.875 in (22.3 mm)":
-        margin = 0.875
-    if dataFromHtml.OutsideMargin == '1 in (25.4 mm)':
-        margin = 1
 
 
-    if margin > marginCalc:
-        section.left_margin = Inches(margin)
-    else:
-        section.left_margin = Inches(marginCalc)
+        if margin > marginCalc:
+            section.left_margin = Inches(margin)
+        else:
+            section.left_margin = Inches(marginCalc)
 
     section.different_first_page_header_footer = True
     document.settings.odd_and_even_pages_header_footer = True
 
     header = section.header
-    footer = section.footer
+    #footer = section.footer
     evenHeader = section.even_page_header
     evenFooter = section.even_page_footer
 
     header.is_linked_to_previous = False
 
     textHeader = header.paragraphs[0]
-    textHeader.text = dataFromHtml.bookTitle
+    textHeader.text = dataFromHtml.bookTitle.upper()
 
     textEvenHeader = evenHeader.paragraphs[0]
-    textEvenHeader.text = dataFromHtml.author
-
-    textFooter = footer.paragraphs[0]
-    textFooter.text = 'Odd Page Number'
-
-    textEvenFooter = evenFooter.paragraphs[0]
-    textEvenFooter.text = 'Even Page Number'
+    textEvenHeader.text = dataFromHtml.author.upper()

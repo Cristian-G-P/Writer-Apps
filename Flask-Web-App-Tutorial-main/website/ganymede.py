@@ -24,7 +24,7 @@ class Results:
 
 def analyzeGrammar(file, dataFromHtml):
     results = Results()
-    doc = docx.Document(PATH_TEMPORAL  + file.filename)
+    doc = docx.Document(file)
     wordsCountInChapter = 0
     wordsCountInBook = 0
     previousWord = ''
@@ -67,7 +67,6 @@ def analyzeGrammar(file, dataFromHtml):
         for i in paragraphReadSplit:
             paragraphReadSplitUpper.append(i.upper())
 
-            key = ' '
 #################################################################################
             ##Remove special characters
             regex = re.compile('[@_!#$%^&*()<>?/\|}{~:,.]')
@@ -153,7 +152,8 @@ def analyzeGrammar(file, dataFromHtml):
     results.adverbsCount = adverbsCount
     results.wordsInChapter = wordsInChapter
     results.wordsInBook = wordsCountInBook
-    displayResults(results, dataFromHtml)
+
+    calculateResults(results, dataFromHtml)
 
 
 def removeSpecialChars(stringToRemoveChars):
@@ -187,7 +187,7 @@ def removeSpecialChars(stringToRemoveChars):
     return response
 
 
-def displayResults(results, dataFromHtml):
+def calculateResults(results, dataFromHtml):
     for x in results.paragraphWords.keys():
         results.numberOfWordsOrdered.append(results.paragraphWords[x])
 
@@ -213,7 +213,7 @@ def displayResults(results, dataFromHtml):
         mostUsedWordsDic[key_list[position]] = val_list[position]
 
         wordsCounter = wordsCounter + 1
-        if wordsCounter > 250:
+        if wordsCounter > OVER_USED_WORDS_NUM_DISPLAY:
             ##ESTE VALOR DEBERIA SER CONSTANTE
             break
 
@@ -223,7 +223,19 @@ def displayResults(results, dataFromHtml):
 
 def printDoc(results, dataFromHtml):
 
-    document = docx.Document(PATH_TEMPORAL  + 'GanymedeTemplate.docx')
+    document = docx.Document(PATH_TEMPLATE  + 'GanymedeTemplate.docx')
+    document.add_section()
+
+    paragraphWrite = document.add_paragraph(' ')
+    paragraphWrite.style = document.styles['BTitle']
+    paragraphWrite = document.add_paragraph(' ')
+    paragraphWrite.style = document.styles['BTitle']
+    paragraphWrite = document.add_paragraph(' ')
+    paragraphWrite.style = document.styles['BTitle']
+    paragraphWrite = document.add_paragraph(dataFromHtml.bookTitle)
+    paragraphWrite.style = document.styles['BTitle']
+
+##############################################################################
 
     PrintTitleAndDescription(document, "FILLER WORDS", FILLER_WORDS_TEXT)
 
@@ -569,10 +581,19 @@ def printDoc(results, dataFromHtml):
 
     printLink(document, 'https://yoast.com/the-passive-voice-what-is-it-and-how-to-avoid-it/', 'yoast.com')
 
+##################################################################
+    PrintTitleAndDescription(document, "SHOW DON'T TELL", SHOW_DONT_TELL_TEXT)
+
+    printLinksTitle(document)
+
+    printLink(document, 'https://jerryjenkins.com/show-dont-tell/', 'jerryjenkins.com')
+    printLink(document, 'https://blog.reedsy.com/show-dont-tell/', 'blog.reedsy.com')
+    printLink(document, 'https://www.nownovel.com/blog/showing-vs-telling/', 'nownovel.com')
+
  ########################################################################################################
     saveGanymedeLog(dataFromHtml.bookTitle)
 
-    document.save(PATH_TEMPORAL + dataFromHtml.bookTitle + ' - Analyzed by Ganymede.docx')
+    document.save(PATH_TEMPORAL + dataFromHtml.bookTitle + ANALYZED_TEXT + '.docx')
 
 ########################################################################################################
 
@@ -702,9 +723,9 @@ def saveGanymedeLog(book):
     now = datetime.now()
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
 
-    doc = docx.Document(PATH_TEMPORAL + 'GanymedeLogs.docx')
+    doc = docx.Document(PATH_LOG + 'GanymedeLogs.docx')
 
     paragraph = date_time + ' --- ' + book
     doc.add_paragraph(paragraph)
 
-    doc.save(PATH_TEMPORAL + 'GanymedeLogs.docx')
+    doc.save(PATH_LOG + 'GanymedeLogs.docx')
