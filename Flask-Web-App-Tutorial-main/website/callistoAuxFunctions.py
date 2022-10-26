@@ -81,6 +81,7 @@ def setChapterTitleFormat(document, paragraphRead, isPreviousAPart):
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Title']
 
+
     paragraph_format = paragraphWrite.paragraph_format
     if isPreviousAPart:
         paragraph_format.space_before = Pt(45)
@@ -89,11 +90,13 @@ def setChapterTitleFormat(document, paragraphRead, isPreviousAPart):
 
     paragraph_format.space_after = Pt(20)
     paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
+    paragraph_format.line_spacing = 1
 
 def setChapterDescriptionFormat(document, paragraphRead):
     paragraphWrite = document.add_paragraph(paragraphRead)
     paragraphWrite.style = document.styles['Chapter Description']
+
+    paragraphWrite.style.paragraph_format.line_spacing = 1
 
     paragraph_format = paragraphWrite.paragraph_format
 

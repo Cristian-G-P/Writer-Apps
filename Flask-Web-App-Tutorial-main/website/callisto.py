@@ -30,7 +30,7 @@ def formatText(file, dataFromHtml):
 
     paragraphsCount = len(docToRead.paragraphs)
 
-    while paragraphReadChapterCount < paragraphsCount - 1:
+    while paragraphReadChapterCount < paragraphsCount:
 
         if paragraphReadChapterCount == 0:
             paragraphRead = docToRead.paragraphs[paragraphReadChapterCount].text.strip()

@@ -173,8 +173,10 @@ def loadDataFromHtml(request):
     dataFromHtml.ChapterDescription = request.form.get('Chapter Description')
     dataFromHtml.PageSize = request.form.get('Page Size')
     dataFromHtml.PublishOrEdit = request.form.get('drone')
+    #if not (hasattr(dataFromHtml, 'RefreshPage')):
+     #   dataFromHtml.RefreshPage = False
 
-    ############################################################################
+ ############################################################################
     if dataFromHtml.PublishOrEdit == 'toEdit':
         dataFromHtml.HalfTitlePage = 'No'
         dataFromHtml.CopyrightPage = 'No'
@@ -183,7 +185,7 @@ def loadDataFromHtml(request):
         dataFromHtml.InsideMargin = '1 in (25.4 mm)'
         dataFromHtml.OutsideMargin = '1 in (25.4 mm)'
         dataFromHtml.ParagraphFontSize = '12'
-        dataFromHtml.ChapterDescription = 'Yes'
+        dataFromHtml.ChapterDescription = 'No'
         dataFromHtml.Justification = 'JUSTIFY'
     ############################################################################
 
